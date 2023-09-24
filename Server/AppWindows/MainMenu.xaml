@@ -1,0 +1,138 @@
+﻿<Window x:Class="Server.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Server"
+
+        mc:Ignorable="d"
+        Title="Menu" Height="520" Width="749"
+         ResizeMode="CanMinimize"
+        >
+
+
+
+
+
+    <!-- Treść MENU -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu po lewej stronie -->
+        <StackPanel Grid.Column="0" Background="#333" Width="250">
+
+            <!-- Nagłówek menu -->
+            <TextBlock Text="Menu" Foreground="White" FontSize="24" Margin="10"/>
+
+            <!-- Pozycje menu -->
+            <Button Content="Ustawienia Serwera"  Margin="10,10,10,0" Click="Server_Setting_Button_Click"/>
+            <Button Content="Użytkownicy"  Margin="10,5" Click="Server_Users_Button_Click"/>
+            <Button Content="Dane"  Margin="10,5"/>
+
+        </StackPanel>
+
+        <!-- Treść strony głównej -->
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            
+            
+            
+            
+            <!--  Server Setting-->
+            <Grid Width="Auto"  Visibility="Visible"  Name="Server_Setting_Content">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Przyciski Start i Stop -->
+                <Button Content="Start" Grid.Row="0" Margin="10"/>
+                <Button Content="Stop" Grid.Row="1" Margin="10"/>
+
+                <!-- Adres bazy danych i Port -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" >
+                    <TextBlock Text="Adres bazy danych" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox Grid.Row="2" Margin="10" Width="200" />
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" >
+                    <TextBlock Text="Adres bazy danych" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="10" Width="100" />
+                </StackPanel>
+
+
+
+                <!-- Wybór certyfikatu HTTP -->
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="10">
+                    <Button Content="Wybierz certyfikat" Width="150"/>
+                    <TextBlock Text="Ścieżka do pliku certyfikatu" Margin="10,0"/>
+                </StackPanel>
+
+                <!-- Wybór ścieżki do lokalizacji plików użytkowników -->
+                <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10">
+                    <Button Content="Wybierz ścieżkę" Width="150"/>
+                    <TextBlock Text="Ścieżka do lokalizacji plików użytkowników" Margin="10,0"/>
+                </StackPanel>
+            </Grid>
+
+            <!--  Server Setting End!-->
+
+
+
+            <!-- Users-->
+
+            <Grid Grid.Column="1"
+                  Name="Server_Users_Content"
+                  Visibility="Collapsed"
+                  Width="Auto" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+
+
+                </Grid.ColumnDefinitions>
+
+                <DataGrid
+                        x:Name="Users_Data_Grid"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="True"
+                        CanUserDeleteRows="True"
+                        IsReadOnly="True"
+                         ItemsSource="{Binding}" HorizontalAlignment="Left" Width="498" Grid.ColumnSpan="5" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ID}" Header="ID" Width="SizeToCells" />
+                        <DataGridTextColumn Binding="{Binding Login}" Header="Login" Width="SizeToCells"   />
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Imię" Width="SizeToCells"  />
+                        <DataGridTextColumn Binding="{Binding Surname}" Header="Nazwisko" Width="SizeToCells"  />
+                        <DataGridTextColumn Binding="{Binding Space_available}" Header="Dostępne miejsce" Width="SizeToHeader" />
+                        <DataGridTextColumn Binding="{Binding Disk_space_used}" Header="Użyte miejsce"  Width="SizeToHeader" />
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+            </Grid>
+            <!-- Users End!-->
+
+        </Grid>
+    </Grid>
+
+
+</Window>
+    
+    
