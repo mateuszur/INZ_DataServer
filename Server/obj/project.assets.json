@@ -1786,9 +1786,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\INŻ\\mateuszur\\INZ_Server\\Server\\Server.csproj",
-      "projectName": "Server",
-      "projectPath": "D:\\INŻ\\mateuszur\\INZ_Server\\Server\\Server.csproj",
+      "projectUniqueName": "D:\\INŻ\\mateuszur\\INZ_Server\\Server\\DataServerGUI.csproj",
+      "projectName": "DataServerGUI",
+      "projectPath": "D:\\INŻ\\mateuszur\\INZ_Server\\Server\\DataServerGUI.csproj",
       "packagesPath": "C:\\Users\\matik\\.nuget\\packages\\",
       "outputPath": "D:\\INŻ\\mateuszur\\INZ_Server\\Server\\obj\\",
       "projectStyle": "PackageReference",
@@ -1849,7 +1849,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
