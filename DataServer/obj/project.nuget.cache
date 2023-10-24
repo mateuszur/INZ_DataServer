@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TFTqE/JKdhg98/dT+W4mJk+gWjhvKilU6AvrBRZ5SW+LA0LhS61a2l7WwDlTjg/eAU+xmSEv3LIaOb1s3/W9jA==",
+  "dgSpecHash": "m7ljINq8hAcyeD6kFBrVHU0AyE5MAJ4SEh09Hs27lC10GXy1ghRRF8TumlEsmn0ercz+n1TgvoK5B1JZ/RKnRA==",
   "success": true,
   "projectFilePath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
   "expectedPackageFiles": [
@@ -35,7 +35,10 @@
     "C:\\Users\\matik\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\matik\\.nuget\\packages\\system.serviceprocess.servicecontroller\\7.0.1\\system.serviceprocess.servicecontroller.7.0.1.nupkg.sha512",
     "C:\\Users\\matik\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\matik\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+    "C:\\Users\\matik\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\matik\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.23\\microsoft.aspnetcore.app.runtime.win-x64.6.0.23.nupkg.sha512",
+    "C:\\Users\\matik\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.23\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.23.nupkg.sha512",
+    "C:\\Users\\matik\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.23\\microsoft.netcore.app.runtime.win-x64.6.0.23.nupkg.sha512"
   ],
   "logs": []
 }
