@@ -133,5 +133,11 @@ namespace Server
             PasswordBox.Visibility = Visibility.Visible;
             PasswordTextBox.Visibility = Visibility.Collapsed;
         }
-    }
+
+        private void LoginButton_Click1(object sender, RoutedEventArgs e)
+        {
+            MainMenu mainmenu = new MainMenu(user_id, user_privilege, username);
+            mainmenu.Show();
+        }
+        }
 }
