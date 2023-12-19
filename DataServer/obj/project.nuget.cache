@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m7ljINq8hAcyeD6kFBrVHU0AyE5MAJ4SEh09Hs27lC10GXy1ghRRF8TumlEsmn0ercz+n1TgvoK5B1JZ/RKnRA==",
+  "dgSpecHash": "B7a2zAYGxqa7K+FQTu3C5ERSr9PFCxl8JMniAk5gctkomU8xHqto8KaRgcRjn7rJyT02AulzBrX6HvNAT7YyjQ==",
   "success": true,
-  "projectFilePath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
+  "projectFilePath": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matik\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\matik\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",

@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Server
         private string username = "user";
         private string password = "Pa$$w0rd";
         private int user_id = 0;
-        private int user_privilege = 0;
+        private int user_privilege = 1;
 
 
         //Database

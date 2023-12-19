@@ -9,9 +9,7 @@ using System.Windows.Navigation;
 
 namespace Server
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainMenu.xaml
-    /// </summary>
+    
     public partial class MainMenu : Window
     {
 
@@ -51,7 +49,7 @@ namespace Server
                 {
                     connection_name.Open();
 
-                    string querry = "SELECT ID, Login, Name, Surname, Space_available, Disk_space_used FROM `Users`;";
+                    string querry = "SELECT ID, Login, Privileges, Name, Surname, Space_available, Disk_space_used FROM `Uzytkownicy`;";
 
                     MySqlCommand commend = new MySqlCommand(querry, connection_name);
                     MySqlDataReader data_from_querry = commend.ExecuteReader();
@@ -66,18 +64,17 @@ namespace Server
                         {
                             ID = int.Parse(data_from_querry.GetString(0)),
                             Login = data_from_querry.GetString(1),
-                            Name = data_from_querry.GetString(2),
-                            Surname= data_from_querry.GetString(3),
-                            Space_available = data_from_querry.GetString(4),
-                            Disk_space_used = data_from_querry.GetString(5),
+                            Privileges=data_from_querry.GetString(2),
+                            Name = data_from_querry.GetString(3),
+                            Surname= data_from_querry.GetString(4),
+                            Space_available = data_from_querry.GetString(5),
+                            Disk_space_used = data_from_querry.GetString(6),
                         
                         };
 
 
                         listOfUsers.Add(feld);
                     }
-
-                    MessageBox.Show("User_name: " + listOfUsers[0].Name + "\n");
 
                     Users_Data_Grid.ItemsSource = listOfUsers;
                     connection_name.Close();
@@ -89,7 +86,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Otwieranie zarządzania hermonogramem... \n"+ ex);
+                MessageBox.Show("Otwieranie zarządzania użytkownikami... \n"+ ex);
             }
 
 

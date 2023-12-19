@@ -7,11 +7,29 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AppWindows\AddUserWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="AppWindows\DeleteUserWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="AppWindows\EditUserWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AppWindows\MainMenu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AppWindows\AddUserWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AppWindows\DeleteUserWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AppWindows\EditUserWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AppWindows\MainMenu.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,49 +24,102 @@ namespace DataServerService
         }
 
 
-        public void Server_Data_Transmission_Listner() { 
+        //        public void Server_Data_Transmission_Listner() { 
 
-         try
+        //         try
+        //        {
+        //            server = new TcpListener(IPAddress.Any, port);
+        //        server.Start();
+        //            Console.WriteLine("Serwer nasłuchuje na porcie " + port);
+
+        //            while (true)
+        //            {
+        //                Console.WriteLine("Oczekiwanie na połączenie...");
+        //                TcpClient client = server.AcceptTcpClient();
+        //        Console.WriteLine("Połączono z klientem.");
+
+        //                // Odbieranie pliku od klienta
+        //                using (NetworkStream stream = client.GetStream())
+        //                {
+        //                    // Odczyt rozmiaru pliku
+        //                    byte[] fileSizeBytes = new byte[4];
+        //        stream.Read(fileSizeBytes, 0, 4);
+        //                    int fileSize = BitConverter.ToInt32(fileSizeBytes, 0);
+
+        //        // Odczyt samego pliku
+        //        byte[] fileData = new byte[fileSize];
+        //        int bytesRead = stream.Read(fileData, 0, fileData.Length);
+
+        //        // Zapis pliku na serwerze
+        //        string fileName = "received_file.mp4"; // Nazwa pliku na serwerze
+        //        File.WriteAllBytes(fileName, fileData);
+        //                    Console.WriteLine("Odebrano plik: " + fileName);
+        //                }
+        //    client.Close();
+        //            }
+        //        }
+        //        catch (Exception e)
+        //        {
+        //    Console.WriteLine("Błąd: " + e.Message);
+        //}
+        //        finally
+        //        {
+        //    server?.Stop();
+        //}
+        //    }
+
+
+        public void Server_Data_Transmission_Listner()
         {
-            server = new TcpListener(IPAddress.Any, port);
-        server.Start();
-            Console.WriteLine("Serwer nasłuchuje na porcie " + port);
+            // Utwórz obiekt TcpListener.
+             server = new TcpListener(IPAddress.Any, port);
 
+            // Zacznij nasłuchiwać połączeń przychodzących.
+            server.Start();
+
+            Console.WriteLine("Serwer jest uruchomiony. Oczekiwanie na połączenia...");
+            
             while (true)
             {
-                Console.WriteLine("Oczekiwanie na połączenie...");
+                // Akceptuj połączenie od klienta.
                 TcpClient client = server.AcceptTcpClient();
-        Console.WriteLine("Połączono z klientem.");
 
-                // Odbieranie pliku od klienta
-                using (NetworkStream stream = client.GetStream())
-                {
-                    // Odczyt rozmiaru pliku
-                    byte[] fileSizeBytes = new byte[4];
-        stream.Read(fileSizeBytes, 0, 4);
-                    int fileSize = BitConverter.ToInt32(fileSizeBytes, 0);
+                // Pobierz obiekt NetworkStream.
+                NetworkStream stream = client.GetStream();
 
-        // Odczyt samego pliku
-        byte[] fileData = new byte[fileSize];
-        int bytesRead = stream.Read(fileData, 0, fileData.Length);
+                // Utwórz obiekt StreamReader do odczytu z NetworkStream.
+                StreamReader reader = new StreamReader(stream);
 
-        // Zapis pliku na serwerze
-        string fileName = "received_file.mp4"; // Nazwa pliku na serwerze
-        File.WriteAllBytes(fileName, fileData);
-                    Console.WriteLine("Odebrano plik: " + fileName);
+
+                byte[] data = new byte[256];
+                int bytes = stream.Read(data, 0, data.Length);
+                string responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                Console.WriteLine("Odebrano: {0}", responseData);
+
+                // Odpowiedź
+                if (responseData == "Ping")
+                {    
+                    Console.WriteLine(DateTime.Now.ToString()+ " Otrzymano PING");
+                    byte[] msg = Encoding.ASCII.GetBytes("Pong");
+                    stream.Write(msg, 0, msg.Length);
+
                 }
-    client.Close();
-            }
-        }
-        catch (Exception e)
-        {
-    Console.WriteLine("Błąd: " + e.Message);
-}
-        finally
-        {
-    server?.Stop();
-}
-    }
+                if (responseData == "Login")
+                {
+                    Console.WriteLine(" Otrzymano prośbę o login");
+                    byte[] msg = Encoding.ASCII.GetBytes("Ready");
+                    stream.Write(msg, 0, msg.Length);
 
+
+
+                }
+
+
+                client.Close();
+
+                
+            }
+
+        }
     }
 }

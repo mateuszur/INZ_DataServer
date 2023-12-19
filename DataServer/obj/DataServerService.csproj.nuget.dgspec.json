@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj": {}
+    "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj": {}
   },
   "projects": {
-    "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj": {
+    "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
+        "projectUniqueName": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
         "projectName": "DataServerService",
-        "projectPath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
+        "projectPath": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
         "packagesPath": "C:\\Users\\matik\\.nuget\\packages\\",
-        "outputPath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\obj\\",
+        "outputPath": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

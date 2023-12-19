@@ -2368,11 +2368,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
+      "projectUniqueName": "C:\\Users\\matik\\Source\\Repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
       "projectName": "DataServerService",
-      "projectPath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
+      "projectPath": "C:\\Users\\matik\\Source\\Repos\\mateuszur\\INZ_Server\\DataServer\\DataServerService.csproj",
       "packagesPath": "C:\\Users\\matik\\.nuget\\packages\\",
-      "outputPath": "D:\\INŻ\\mateuszur\\INZ_Server\\DataServer\\obj\\",
+      "outputPath": "C:\\Users\\matik\\Source\\Repos\\mateuszur\\INZ_Server\\DataServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

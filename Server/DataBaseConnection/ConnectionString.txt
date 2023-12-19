@@ -1,1 +1,1 @@
-﻿Server=polsl.online;Uid=inz;Pwd=Pa$$w0rd;Database=inz_MU23/24;
+﻿Server=192.168.1.51;Uid=inz;Pwd=Pa$$w0rd;Database=Server_inz_MU23/24;
