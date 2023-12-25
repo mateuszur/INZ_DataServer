@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cOKbvuZL/zkNKyn4G7Jm91G246YYnCb4YaPBeyVj5/GFQEgcLvkU/na0BXv8/f13AhxtSoqCY1LFdwy5gG2HsQ==",
+  "dgSpecHash": "EzH/gGXx2Dsrc+yjpt0IxsW/oO4G5sSbcX+MH8+2o4c/dDD2nU9NSFB9CklTJIap7uK2eaAqG3DUBUG4SRh4Wg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\Server\\DataServerGUI.csproj",
+  "projectFilePath": "C:\\Users\\matik\\Source\\Repos\\mateuszur\\INZ_Server\\Server\\DataServerGUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matik\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
     "C:\\Users\\matik\\.nuget\\packages\\k4os.compression.lz4\\1.3.5\\k4os.compression.lz4.1.3.5.nupkg.sha512",

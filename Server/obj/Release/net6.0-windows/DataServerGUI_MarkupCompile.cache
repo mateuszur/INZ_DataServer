@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\App.xaml
-21717860126
+5688501694
 
-8919726879
+11324815591
 202290627664
-AppWindows\MainMenu.xaml;LoginWindow.xaml;
+AppWindows\AddUserWindow.xaml;AppWindows\DeleteUserWindow.xaml;AppWindows\EditUserWindow.xaml;AppWindows\MainMenu.xaml;LoginWindow.xaml;
 
 True
 

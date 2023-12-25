@@ -1,8 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Ocsp;
 using Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,6 @@ namespace Server
     /// </summary>
     public partial class LoginWindow : Window
     {
-
 
         private string username = "user";
         private string password = "Pa$$w0rd";
@@ -57,49 +58,49 @@ namespace Server
 
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //1username = UsernameTextBox.Text;
-            //password = PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
-          //  NazwaUżytkownika.Content = username;
+            username = UsernameTextBox.Text;
+            password = PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
+        
 
-            using (SHA1 sha1 = SHA1.Create())
-            {
-                byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
-                password = BitConverter.ToString(hash).Replace("-", "").ToLower();
-            }
 
-            connection_name.ConnectionString = connection_string;
+
+            //using (SHA1 sha1 = SHA1.Create())
+            //{
+            //    byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
+            //    password = BitConverter.ToString(hash).Replace("-", "").ToLower();
+            //}
+
+            
 
             try
             {
-                connection_name.Open();
-                {
-                    string query1 = "SELECT * FROM `Users` WHERE Login LIKE @username AND Password LIKE @password;";
-                    MySqlCommand command = new MySqlCommand(query1, connection_name);
-                    command.Parameters.AddWithValue("@username", username);
-                    command.Parameters.AddWithValue("@password", password);
-                    MySqlDataReader data_from_query1 = command.ExecuteReader();
+                TcpClient client = new TcpClient("localhost", 3333);
+                NetworkStream stream = client.GetStream();
 
-                    while (data_from_query1.Read())
+                //Obsługa rządania
+                byte[] dataUser = Encoding.ASCII.GetBytes("Login " + username + " "+password);
+                stream.Write(dataUser, 0, dataUser.Length);
+                await Task.Delay(1500);
+
+                //Obsługa odp string respon = sessionDetails.SessionID + " " + sessionDetails.DataTimeEnd + " "+userDetails.Privileges + " " + userDetails.Login + " " + userDetails.ID;
+                dataUser = new byte[256];
+
+                int bytes = stream.Read(dataUser, 0, dataUser.Length);
+                string responseData = Encoding.ASCII.GetString(dataUser, 0, bytes);
+                string[] parts = responseData.Split(' ');
+
+
+                if (parts[0]== "LoginSuccessful" && parts[4]=="1")
                     {
-                        user_id = (int)data_from_query1["ID"];
-                        user_privilege = (int)data_from_query1["Privileges"];
-                    }
-
-                    if (user_id != 0)
-                    {
-                        //MessageBox.Show("Logowanie zakończone pomyślnie. Witaj: " + username +
-                        //           " Twoje uprawnienia to: " + user_privilege);
-                        //EnableButtons();
-                        //connection_name.Close();
-
-                        //Content_Harmonogram.Visibility = Visibility.Visible;
-                        //Content_Logowanie.Visibility = Visibility.Collapsed;
+                        MessageBox.Show("Logowanie zakończone pomyślnie. Witaj: " + parts[5] +
+                                   "\nTwoje uprawnienia to: " + parts[4] + "\n Twój ID to: "+ parts[6] + "\n ID sesji: "+ parts[2]);
+                        
 
                         MainMenu mainmenu = new MainMenu(user_id,user_privilege,username);
                         mainmenu.Show();
-                        connection_name.Close();
+                        client.Close();
                         this.Close();
 
                     }
@@ -108,12 +109,12 @@ namespace Server
                         MessageBox.Show("Niepoprawna nazwa użytkownika lub hasła!");
                         connection_name.Close();
                     }
-                }
+                
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Błąd połączenia do bazy danych!" + ex);
-                connection_name.Close();
+                MessageBox.Show("Błąd połączenia do serwera!" + ex);
+                
 
             }
         
@@ -135,6 +136,11 @@ namespace Server
             PasswordTextBox.Visibility = Visibility.Collapsed;
         }
 
+
+
+
+
+        // funkcja do testowania aby pominąć wpisywanie logwagoania- do usunięcia na koniec
         private void LoginButton_Click1(object sender, RoutedEventArgs e)
         {
             MainMenu mainmenu = new MainMenu(user_id, user_privilege, username);
