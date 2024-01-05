@@ -76,7 +76,7 @@ namespace Server
 
             try
             {
-                TcpClient client = new TcpClient("localhost", 3333);
+                TcpClient client = new TcpClient("192.168.1.90", 3333);
                 NetworkStream stream = client.GetStream();
 
                 //Obsługa rządania
@@ -113,7 +113,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Błąd połączenia do serwera!" + ex);
+                MessageBox.Show("Błąd połączenia do serwera!");
                 
 
             }

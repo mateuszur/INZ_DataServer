@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\DataServer",
     "\\Server",
     "\\Server\\AppWindows"
   ],
-  "SelectedNode": "\\Server\\LoginWindow.xaml.cs",
+  "SelectedNode": "\\Server\\Server.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -588,3 +588,4 @@ C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\k5sprt64.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\krb5_64.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\krbcc64.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\Config\ServerConfig.txt

@@ -49,7 +49,7 @@ namespace Server
                 {
                     connection_name.Open();
 
-                    string querry = "SELECT ID, Login, Privileges, Name, Surname, Space_available, Disk_space_used FROM `Uzytkownicy`;";
+                    string querry = "SELECT ID, Login, Privileges, Name, Surname, Space_available, Disk_space_used FROM `View_Users`;";
 
                     MySqlCommand commend = new MySqlCommand(querry, connection_name);
                     MySqlDataReader data_from_querry = commend.ExecuteReader();
@@ -99,5 +99,15 @@ namespace Server
 
             pageToShow.Visibility = Visibility.Visible;
         }
+
+
+        private void Server_Logout(object sender, EventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+
+        }
+
     }
 }
