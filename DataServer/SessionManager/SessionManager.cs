@@ -190,7 +190,7 @@ namespace DataServerService
         }
         // // /// /////////////////////////////////
 
-        // zakańczanie sesji
+        // zakańczanie sesji- wylogorawnie 
         public bool EndSession(string SesionID)
         {
             try
@@ -224,6 +224,43 @@ namespace DataServerService
                 return false;
             }
         }
+
+        ///werwyfiakcaja ważności seseji po zapytaniu klienta
+        ///
+        public bool IsSessionValid(string sessionID, string userID)
+        {
+            if (IsSessionValidWorker(sessionID, userID))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        private bool IsSessionValidWorker(string sessionID, string userID)
+        {
+            connection_name.ConnectionString = connection_string;
+
+            string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
+
+            MySqlCommand command = new MySqlCommand(query, connection_name);
+
+            command.Parameters.AddWithValue("@sessionID", sessionID);
+
+            if (command.ExecuteNonQuery() == 1)
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+
+
     }
 }
 

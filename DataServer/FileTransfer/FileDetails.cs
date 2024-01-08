@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataServerService
 {
-    internal class FileDetails
+    public class FileDetails
     {
+        
         public string FileID { get; set; }
         public string FileName { get; set; }
-        public string FileSize { get; set; }
+        public int FileSize { get; set; }
         public string FileType { get; set; }
 
         public int userID { get; set; }

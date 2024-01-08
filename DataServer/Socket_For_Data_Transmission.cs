@@ -15,7 +15,16 @@ namespace DataServerService
 {
     public partial  class Socket_For_Data_Transmission
     {
+
+
+
+        // konfiguracja do zaczytania z pliku
         private int port;
+        string FTP_username = "user";
+        string FTP_password = "Pa$$w0rd";
+
+
+
         TcpListener server;
 
         //Sesja
@@ -37,6 +46,7 @@ namespace DataServerService
 
         public void Server_Data_Transmission_Listner()
         {
+           
 
 
             //Baza danych
@@ -144,6 +154,7 @@ namespace DataServerService
                 }
 
 
+                //Treansfer plików
                 if (responseData.StartsWith("Upload"))
                 {
                     Console.WriteLine(" Otrzymano prośbę o przesłanie pliku...");
@@ -151,10 +162,45 @@ namespace DataServerService
 
                     //Tworzenie pliku w bazie jeżeli pochodzi z obecnej sesji
                     FileTransferManager fileTransferManager = new FileTransferManager();
-
-                    if(parts.Length == 4 && fileTransferManager.IsSessionValid(parts[1]))
+                    FileDetails fileDetails = new FileDetails();
+                    if(parts.Length == 6 && fileTransferManager.IsSessionValid(parts[1]))
                     {
 
+                        fileDetails.userID = int.Parse(parts[2]);
+                        fileDetails.FileName = parts[3];
+                        fileDetails.FileType = parts[4];
+                        fileDetails.FileSize = int.Parse(parts[5]);
+                        fileDetails.DateOfTransfer = DateTime.Now;
+
+                        if (fileTransferManager.HasUserFreeSpace(fileDetails))
+                        {
+                            //przygotowujemy lokalziację oraz wpis w bazie 
+                            fileTransferManager.CreateFile(fileDetails);
+
+                            byte[] msg = Encoding.ASCII.GetBytes("YourPath " + fileTransferManager.CreateFileRespon(fileDetails) + " "+FTP_username+" "+FTP_password);
+
+                            stream.Write(msg, 0, msg.Length);
+                            Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID:" + parts[2]);
+                            client.Close();
+
+                        }
+                        else
+                        {
+                            //respon o braku miejsca 
+                            byte[] msg = Encoding.ASCII.GetBytes("NoFreeSpace");
+
+                            stream.Write(msg, 0, msg.Length);
+                            Console.WriteLine(" " + DateTime.Now + " Brak miejsca na plik dla użytkownika o ID: "+ parts[2]);
+                            client.Close();
+                        }
+                    }
+                    else
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("SessionIsNotValid");
+
+                        stream.Write(msg, 0, msg.Length);
+                        Console.WriteLine(" " + DateTime.Now + " Unieważniono sesję użytkonika o ID:" + parts[2]);
+                        client.Close();
                     }
 
                 }
@@ -163,6 +209,35 @@ namespace DataServerService
                 {
 
                 }
+
+               
+
+                //Weryfiakcja sesji
+                if(responseData.StartsWith("IsSessionValid"))
+                {
+                    Console.WriteLine(" Otrzymano prośbę o  weryfiakcję ważnosci sesji klienta...");
+
+                    string[] parts = responseData.Split(' ');
+                    SessionManager sessionManager = new SessionManager();
+
+                    if (sessionManager.IsSessionValid(parts[1], parts[2]))
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("Sesion is valid");
+                        stream.Write(msg, 0, msg.Length);
+
+                    }
+                    else
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("Sesion is not valid");
+                        stream.Write(msg, 0, msg.Length);
+
+                    }
+
+
+                    client.Close();
+
+                }
+
 
                 client.Close();
 
