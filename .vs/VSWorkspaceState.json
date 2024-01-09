@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\DataServer",
+    "\\DataServer\\FileTransfer",
     "\\Server",
     "\\Server\\AppWindows"
   ],
-  "SelectedNode": "\\Server\\Server.sln",
+  "SelectedNode": "\\DataServer\\FileTransfer\\FileDetails.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -22,25 +22,26 @@ namespace DataServerService
         private MySqlConnection connection_name = new MySqlConnection();
 
         //weryfikacja sesji przez przystąpieniem do przeysłania pliku
-        public bool IsSessionValid(string sessionID)
+        public bool IsSessionValid(string sessionID,int userID)
         {
-            if(IsSessionValidWorker(sessionID))
+            if(IsSessionValidWorker(sessionID, userID))
             {
                 return true;
             }
             return false;
         }
-        private bool IsSessionValidWorker(string sessionID)
+        private bool IsSessionValidWorker(string sessionID,int userID)
         {
             try
             {
                 connection_name.ConnectionString = connection_string;
 
-                string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID";
+                string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID= @userID";
                 int result=0;
                 MySqlCommand command = new MySqlCommand(query, connection_name);
                 connection_name.Open();
                 command.Parameters.AddWithValue("@sessionID", sessionID);
+                command.Parameters.AddWithValue("@userID", userID);
                 MySqlDataReader data_from_querry = command.ExecuteReader();
                 while (data_from_querry.Read())
                 {
@@ -138,7 +139,7 @@ namespace DataServerService
                 connection_name.ConnectionString = connection_string;
                 CreateFileID(fileDetails);
 
-                string querry = "INSERT INTO `File_Table` (`ID`, `User_ID`, `File_name`, `File_Size`, `File_type`) VALUES(@fileID, @userID, @fileName, @fileSize, @fileType)";
+                string querry = "INSERT INTO `File_Table` (`ID`, `User_ID`, `File_name`, `File_Size`, `File_type` , `Date_of_Transfer`, `Source_IP_Adress`) VALUES(@fileID, @userID, @fileName, @fileSize, @fileType, @dateTransfer, @sourceIP)";
                 MySqlCommand command = new MySqlCommand(querry, connection_name);
 
                 command.Parameters.AddWithValue("@fileID", fileDetails.FileID);
@@ -146,6 +147,8 @@ namespace DataServerService
                 command.Parameters.AddWithValue("@fileName", fileDetails.FileName);
                 command.Parameters.AddWithValue("@fileSize", fileDetails.FileSize);
                 command.Parameters.AddWithValue("@fileType", fileDetails.FileType);
+                command.Parameters.AddWithValue("@dateTransfer", fileDetails.DateOfTransfer);
+                command.Parameters.AddWithValue("@sourceIP", fileDetails.SourceIPAddress);
 
 
                 connection_name.Open();
@@ -190,7 +193,7 @@ namespace DataServerService
                 {
                     Directory.CreateDirectory(path);
                     return;
-                    //Console.WriteLine("Folder został utworzony: {0}", Directory.GetCreationTime(path));
+                    
                 }
                 else
                 {
@@ -198,7 +201,7 @@ namespace DataServerService
                 }
             }catch (Exception ex)
             {
-                Console.WriteLine("  Błąd podczas tworzenia folderu usera: "+ex.Message);
+                Console.WriteLine("  Błąd podczas tworzenia folderu użytkownika: "+ex.Message);
                 return;
             }
         }
@@ -209,7 +212,7 @@ namespace DataServerService
         {
             try
             {
-                string responString = "/user/User" + fileDetails.userID + "/" + fileDetails.FileID + "." + fileDetails.FileType;
+                string responString = "/user/User" + fileDetails.userID + "/" + fileDetails.FileID  + fileDetails.FileType;
                 return responString;
 
             }
@@ -222,10 +225,65 @@ namespace DataServerService
         }
 
 
+        public List<FileDetails> GetFileList(List<FileDetails>listOfFiles, int userID)
+        {
+            try
+            {
+                connection_name.ConnectionString = connection_string;
 
 
 
+                string querry = "SELECT `File_name`, File_Size, File_type, Date_of_Transfer FROM `View_Files_List` WHERE User_ID= @userID;";
 
+
+                MySqlCommand command = new MySqlCommand(querry, connection_name);
+
+                command.Parameters.AddWithValue("@userID", userID);
+
+                connection_name.Open();
+                MySqlDataReader data_from_querry = command.ExecuteReader();
+
+                while (data_from_querry.Read())
+                {
+                    FileDetails feld = new FileDetails
+                    {
+                        FileName = data_from_querry.GetString(0),
+                        FileSize = int.Parse(data_from_querry.GetString(1)),
+                        FileType = data_from_querry.GetString(2),
+                        DateOfTransfer = DateTime.Parse(data_from_querry.GetString(3)),
+                    };
+                    listOfFiles.Add(feld);
+
+                }
+                connection_name.Close();
+
+
+                return listOfFiles;
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                connection_name.Close();
+                listOfFiles = null;
+                return listOfFiles;
+            }
+        }
+
+
+        public string GetFileListRespon(List<FileDetails> listOfFiles)
+        {
+            string respon="";
+
+
+            foreach (FileDetails file in listOfFiles)
+            {
+
+                respon = file.FileName+" "+file.FileSize+" "+file.FileType+" "+file.DateOfTransfer+",";
+
+            }
+
+
+            return respon;
+        }
 
     }
 }

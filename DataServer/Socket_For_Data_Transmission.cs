@@ -79,7 +79,8 @@ namespace DataServerService
             {
                 // Akceptuj połączenie od klienta.
                 TcpClient client = server.AcceptTcpClient();
-
+                //pobranie adresu IP klienta
+                IPEndPoint remoteEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
                 // Pobierz obiekt NetworkStream.
                 NetworkStream stream = client.GetStream();
 
@@ -163,7 +164,9 @@ namespace DataServerService
                     //Tworzenie pliku w bazie jeżeli pochodzi z obecnej sesji
                     FileTransferManager fileTransferManager = new FileTransferManager();
                     FileDetails fileDetails = new FileDetails();
-                    if(parts.Length == 6 && fileTransferManager.IsSessionValid(parts[1]))
+                    IPAddress clientIpAddress = remoteEndPoint.Address;
+                   
+                    if (parts.Length == 6 && fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2])))
                     {
 
                         fileDetails.userID = int.Parse(parts[2]);
@@ -171,6 +174,7 @@ namespace DataServerService
                         fileDetails.FileType = parts[4];
                         fileDetails.FileSize = int.Parse(parts[5]);
                         fileDetails.DateOfTransfer = DateTime.Now;
+                        fileDetails.SourceIPAddress= clientIpAddress.ToString();
 
                         if (fileTransferManager.HasUserFreeSpace(fileDetails))
                         {
@@ -180,7 +184,7 @@ namespace DataServerService
                             byte[] msg = Encoding.ASCII.GetBytes("YourPath " + fileTransferManager.CreateFileRespon(fileDetails) + " "+FTP_username+" "+FTP_password);
 
                             stream.Write(msg, 0, msg.Length);
-                            Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID:" + parts[2]);
+                            Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID: " + parts[2] + " Źródłowy adres IP: "+ clientIpAddress.ToString());
                             client.Close();
 
                         }
@@ -210,7 +214,40 @@ namespace DataServerService
 
                 }
 
-               
+                if (responseData.StartsWith("List"))
+                {
+                    FileTransferManager fileTransferManager = new FileTransferManager();
+                    List<FileDetails> fileDetailsList = new List<FileDetails>();
+
+                    Console.WriteLine(" Otrzymano prośbę o przesłanie listy plików użytkownika.");
+                    string[] parts = responseData.Split(' ');
+                    
+                    if(parts.Length == 3 && fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2])))
+                    {
+                        
+                        fileTransferManager.GetFileList(fileDetailsList, int.Parse(parts[2]));
+
+                        byte[] msg = Encoding.ASCII.GetBytes("FileList," + fileTransferManager.GetFileListRespon(fileDetailsList));
+
+                        stream.Write(msg, 0, msg.Length);
+
+
+                        Console.WriteLine(" " + DateTime.Now + " Przesłano listę plików użytkownika ID: " + parts[2]);
+                        client.Close();
+
+                    }
+                    else
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("SessionIsNotValid");
+
+                        stream.Write(msg, 0, msg.Length);
+                        Console.WriteLine(" " + DateTime.Now + " Unieważniono sesję użytkonika o ID:" + parts[2]);
+                        client.Close();
+                    }
+
+                    
+
+                }
 
                 //Weryfiakcja sesji
                 if(responseData.StartsWith("IsSessionValid"))
