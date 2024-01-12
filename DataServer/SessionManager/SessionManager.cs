@@ -245,16 +245,26 @@ namespace DataServerService
                 connection_name.ConnectionString = connection_string;
 
                 string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
-
+                string data = "";
                 MySqlCommand command = new MySqlCommand(query, connection_name);
 
                 command.Parameters.AddWithValue("@sessionID", sessionID);
                 command.Parameters.AddWithValue("@userID", userID);
 
                 connection_name.Open();
-                if (command.ExecuteNonQuery() == 1)
+                MySqlDataReader data_from_query = command.ExecuteReader();
+
+
+
+                while (data_from_query.Read())
                 {
-                    connection_name.Close() ;
+                    data = data_from_query[0].ToString();
+                }
+
+
+                if (data == "1")
+                {
+                    connection_name.Close();
                     return true;
                 }
                 else
@@ -263,10 +273,11 @@ namespace DataServerService
                     return false;
                 }
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 connection_name.Close();
-                Console.WriteLine("Wystąpił błąd podczas weryfiakcji sesji: "+ex.ToString());
+                Console.WriteLine("Wystąpił błąd podczas weryfiakcji sesji: " + ex.ToString());
                 return false;
             }
 
