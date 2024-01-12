@@ -26,7 +26,7 @@ namespace DataServerService
         public string SessionRespon()
         {
 
-            string respon = sessionDetails.SessionID + " " + sessionDetails.DataTimeEnd + " "+userDetails.Privileges + " " + userDetails.Login + " " + userDetails.ID;
+            string respon = sessionDetails.SessionID + "," + sessionDetails.DataTimeEnd + ","+userDetails.Privileges + "," + userDetails.Login + "," + userDetails.ID;
             return respon;
         }
 
@@ -239,23 +239,37 @@ namespace DataServerService
 
         private bool IsSessionValidWorker(string sessionID, string userID)
         {
-            connection_name.ConnectionString = connection_string;
-
-            string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
-
-            MySqlCommand command = new MySqlCommand(query, connection_name);
-
-            command.Parameters.AddWithValue("@sessionID", sessionID);
-
-            if (command.ExecuteNonQuery() == 1)
+            try
             {
+                MySqlConnection connection_name = new MySqlConnection();
+                connection_name.ConnectionString = connection_string;
 
-                return true;
-            }
-            else
+                string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
+
+                MySqlCommand command = new MySqlCommand(query, connection_name);
+
+                command.Parameters.AddWithValue("@sessionID", sessionID);
+                command.Parameters.AddWithValue("@userID", userID);
+
+                connection_name.Open();
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    connection_name.Close() ;
+                    return true;
+                }
+                else
+                {
+                    connection_name.Close();
+                    return false;
+                }
+
+            }catch (Exception ex)
             {
+                connection_name.Close();
+                Console.WriteLine("Wystąpił błąd podczas weryfiakcji sesji: "+ex.ToString());
                 return false;
             }
+
 
         }
 

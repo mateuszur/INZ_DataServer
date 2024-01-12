@@ -250,7 +250,7 @@ namespace DataServerService
                         FileName = data_from_querry.GetString(0),
                         FileSize = int.Parse(data_from_querry.GetString(1)),
                         FileType = data_from_querry.GetString(2),
-                        DateOfTransfer = DateTime.Parse(data_from_querry.GetString(3)),
+                        DateOfTransfer = DateTime.ParseExact(data_from_querry.GetString(3), "dd.MM.yyyy HH:mm:ss", null),
                     };
                     listOfFiles.Add(feld);
 
@@ -261,7 +261,7 @@ namespace DataServerService
                 return listOfFiles;
             }catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("  Błąd pobiernaia listy plików:"+ex.Message);
                 connection_name.Close();
                 listOfFiles = null;
                 return listOfFiles;
@@ -277,7 +277,7 @@ namespace DataServerService
             foreach (FileDetails file in listOfFiles)
             {
 
-                respon = file.FileName+" "+file.FileSize+" "+file.FileType+" "+file.DateOfTransfer+",";
+                respon = respon+file.FileName+" "+file.FileSize+" "+file.FileType+" "+file.DateOfTransfer+",";
 
             }
 

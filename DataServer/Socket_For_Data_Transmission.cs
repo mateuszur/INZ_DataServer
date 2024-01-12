@@ -114,7 +114,7 @@ namespace DataServerService
 
                         if (sessionManager.IsSessionCreated(DateTime.Now))
                         {
-                            byte[] msg = Encoding.ASCII.GetBytes("LoginSuccessful " + sessionManager.SessionRespon());
+                            byte[] msg = Encoding.ASCII.GetBytes("LoginSuccessful," + sessionManager.SessionRespon());
                             stream.Write(msg, 0, msg.Length);
                             Console.WriteLine(" " + DateTime.Now + " Logowanie " + parts[1]);
 
@@ -261,17 +261,19 @@ namespace DataServerService
                     {
                         byte[] msg = Encoding.ASCII.GetBytes("Sesion is valid");
                         stream.Write(msg, 0, msg.Length);
+                        client.Close();
 
                     }
                     else
                     {
                         byte[] msg = Encoding.ASCII.GetBytes("Sesion is not valid");
                         stream.Write(msg, 0, msg.Length);
+                        client.Close();
 
                     }
 
 
-                    client.Close();
+                    
 
                 }
 
