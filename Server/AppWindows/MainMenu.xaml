@@ -46,43 +46,55 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Przyciski Start i Stop -->
                 <Button Content="Start" Grid.Row="0" Margin="10"/>
                 <Button Content="Stop" Grid.Row="1" Margin="10"/>
 
-                <!-- Adres bazy danych i Port -->
+                <!-- Adres bazy danych -->
                 <StackPanel Grid.Row="2" Orientation="Horizontal" >
                     <TextBlock Text="Adres bazy danych" Grid.Row="2" Width="148"  Margin="10" />
                     <TextBox Grid.Row="2" Margin="10" Width="200" />
                 </StackPanel>
 
-                <!--Port Serwera-->
+                <!--Port bazy danych-->
                 <StackPanel Grid.Row="3" Orientation="Horizontal" >
-                    <TextBlock Text="Port serwera" Grid.Row="2" Width="148"  Margin="10" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Margin="10" Width="100" />
+                    <TextBlock Text="Port serwera bazy danych:" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox Text="3306" IsReadOnly="True" Grid.Column="1" Margin="10" Width="100" />
+                </StackPanel>
+
+                <!--Port Serwera-->
+                <StackPanel Grid.Row="4" Orientation="Horizontal" >
+                    <TextBlock Text="Port serweraP:" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox Text="3333" IsReadOnly="True" Grid.Column="1" Margin="10" Width="100" />
                 </StackPanel>
 
                 <!--Port Serwera FTP-->
-                <StackPanel Grid.Row="4" Orientation="Horizontal" >
-                    <TextBlock Text="Port dla FTP" Grid.Row="2" Width="148"  Margin="10" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Margin="10" Width="100" Text="3334" IsReadOnly="True"/>
+                <StackPanel Grid.Row="5" Orientation="Horizontal" >
+                    <TextBlock Text="Port dla FTP:" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox  Grid.Column="1" Margin="10" Width="100" Text="3334" IsReadOnly="True"/>
                 </StackPanel>
 
                 <!-- Wybór certyfikatu HTTP -->
-                <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="10">
+                <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10">
                     <Button Content="Wybierz certyfikat" Width="150"/>
                     <TextBlock Text="Ścieżka do pliku certyfikatu" Margin="10,0"/>
                 </StackPanel>
+                <!--Hasło certyfikatu -->
+                <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="10">
+                    <TextBlock Text="Hasło certyfiaktu"  Width="148"   />
+                    <PasswordBox Grid.Column="1" Width="150" Height="20" />
+                </StackPanel>
 
                 <!-- Wybór ścieżki do lokalizacji plików użytkowników -->
-                <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10">
+                <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="10">
                     <Button Content="Wybierz ścieżkę" Width="150"/>
                     <TextBlock Text="Ścieżka do lokalizacji plików użytkowników" Margin="10,0"/>
                 </StackPanel>
                 
-                <Button Content="Zapisz" Grid.Row="7" Margin="10"/>
+                <Button Content="Zapisz" Grid.Row="9" Margin="10"/>
 
             </Grid>
 

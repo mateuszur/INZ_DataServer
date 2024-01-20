@@ -3,9 +3,10 @@
     "",
     "\\DataServer",
     "\\DataServer\\FileTransfer",
+    "\\DataServer\\SessionManager",
     "\\Server",
     "\\Server\\AppWindows"
   ],
-  "SelectedNode": "\\DataServer\\FileTransfer\\FileTransferManager.cs",
+  "SelectedNode": "\\DataServer\\SessionManager\\SessionManager.cs",
   "PreviewInSolutionExplorer": false
 }

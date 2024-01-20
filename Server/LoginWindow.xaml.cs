@@ -26,10 +26,10 @@ namespace Server
     public partial class LoginWindow : Window
     {
 
-        private string username = "user";
-        private string password = "Pa$$w0rd";
-        private int user_id = 0;
-        private int user_privilege = 1;
+        private string username;// = "mateuszur";
+        private string password;// = "Pa$$w0rd";
+        private int user_id;
+        private int user_privilege;
 
 
         //Database
@@ -89,16 +89,17 @@ namespace Server
 
                 int bytes = stream.Read(dataUser, 0, dataUser.Length);
                 string responseData = Encoding.ASCII.GetString(dataUser, 0, bytes);
-                string[] parts = responseData.Split(' ');
+                string[] parts = responseData.Split(',');
 
 
-                if (parts[0]== "LoginSuccessful" && parts[4]=="1")
+                if (parts[0]== "LoginSuccessful" && parts[3]=="1")
                     {
-                        MessageBox.Show("Logowanie zakończone pomyślnie. Witaj: " + parts[5] +
-                                   "\nTwoje uprawnienia to: " + parts[4] + "\n Twój ID to: "+ parts[6] + "\n ID sesji: "+ parts[2]);
-                        
+                        MessageBox.Show("Logowanie zakończone pomyślnie. Witaj: " + parts[4] +
+                                   "\nTwoje uprawnienia to: " + parts[3] +   "\n ID sesji: "+ parts[1]);
 
-                        MainMenu mainmenu = new MainMenu(user_id,user_privilege,username);
+                    user_privilege = int.Parse(parts[3]);    
+
+                        MainMenu mainmenu = new MainMenu(user_privilege,username);
                         mainmenu.Show();
                         client.Close();
                         this.Close();
@@ -113,7 +114,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Błąd połączenia do serwera!");
+                MessageBox.Show("Błąd połączenia do serwera!\n" + ex.ToString());
                 
 
             }
@@ -143,7 +144,7 @@ namespace Server
         // funkcja do testowania aby pominąć wpisywanie logwagoania- do usunięcia na koniec
         private void LoginButton_Click1(object sender, RoutedEventArgs e)
         {
-            MainMenu mainmenu = new MainMenu(user_id, user_privilege, username);
+            MainMenu mainmenu = new MainMenu( user_privilege, username);
             mainmenu.Show();
         }
         }

@@ -14,17 +14,19 @@ namespace Server
     {
 
         private int user_privilege;
+        private string username;
 
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
         MySqlConnection connection_name = new MySqlConnection();
 
 
-        public MainMenu(int user_id, int user_privilege, string username)
+        public MainMenu( int user_privilege, string username)
         {
             InitializeComponent();
             connection_string = fileManager.ReadParameter();
             this.user_privilege = user_privilege;
+            this.username = username;
 
         }
 
