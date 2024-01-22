@@ -88,3 +88,9 @@ C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\obj\x64\Debug\net6.0-win
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\obj\x64\Debug\net6.0-windows\AppWindows\EditUserWindow.baml
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\obj\x64\Debug\net6.0-windows\AppWindows\DeleteUserWindow.g.cs
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\obj\x64\Debug\net6.0-windows\AppWindows\DeleteUserWindow.baml
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.exe
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataBaseConnection\ConnectionString.txt
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.deps.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.runtimeconfig.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.dll
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.pdb

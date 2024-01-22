@@ -23,32 +23,35 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Imię" Grid.Row="1" Grid.Column="0"/>
-        <TextBox x:Name="NameTextBox" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="ID" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="IDTextBox" Grid.Row="1" Grid.Column="1"/>
 
-        <Label Content="Nazwisko" Grid.Row="2" Grid.Column="0"/>
-        <TextBox x:Name="SurnameTextBox" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Imię" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="NameTextBox" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+
+        <Label Content="Nazwisko" Grid.Row="3" Grid.Column="0"/>
+        <TextBox x:Name="SurnameTextBox" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
 
         
 
-        <Label Content="Hasło" Grid.Row="4" Grid.Column="0"/>
-        <PasswordBox x:Name="Password1" Grid.Row="4" Grid.Column="1"/>
+        <Label Content="Hasło" Grid.Row="5" Grid.Column="0"/>
+        <PasswordBox x:Name="Password1" Grid.Row="5" Grid.Column="1" IsEnabled="False"/>
 
-        <Label Content="Powtórz hasło" Grid.Row="5" Grid.Column="0"/>
-        <PasswordBox x:Name="Password2" Grid.Row="5" Grid.Column="1"/>
+        <Label Content="Powtórz hasło" Grid.Row="6" Grid.Column="0"/>
+        <PasswordBox x:Name="Password2" Grid.Row="6" Grid.Column="1" IsEnabled="False"/>
 
-        <Label Content="Uprawnienia" Grid.Row="6" Grid.Column="0"/>
-        <ComboBox x:Name="PrivilegesComboBox" SelectedItem="" Grid.Row="6" Grid.Column="1" Width="Auto" Height="25" HorizontalAlignment="Left">
+        <Label Content="Uprawnienia" Grid.Row="7" Grid.Column="0"/>
+        <ComboBox x:Name="PrivilegesComboBox" SelectedItem="" Grid.Row="7" Grid.Column="1" Width="Auto" Height="25" HorizontalAlignment="Left" IsEnabled="False">
             <ComboBoxItem IsSelected="True">Użytkownik sytemu</ComboBoxItem>
             <ComboBoxItem>Administrator systemu</ComboBoxItem>
         </ComboBox>
 
-        <Label Content="Dostęne miejsce na pliki" Grid.Row="7" Grid.Column="0"/>
-        <TextBox x:Name="Space_available" Grid.Row="7" Grid.Column="1"/>
+        <Label Content="Dostęne miejsce na pliki" Grid.Row="8" Grid.Column="0"/>
+        <TextBox x:Name="Space_available" Grid.Row="8" Grid.Column="1" IsReadOnly="True"/>
 
 
         <!-- Save changes button -->
-        <Button x:Name="Zatwierdz" Content="Zapisz zmiany" Click="Edit_User_Save" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Padding="10,5" Background="#0078D7" Foreground="White" BorderThickness="0" Cursor="Hand" Width="90" Height="25" Margin="0,36,10,-36">
+        <Button x:Name="Zatwierdz" Content="Zapisz zmiany" Click="Edit_User_Save" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" Padding="10,5" Background="#0078D7" Foreground="White" BorderThickness="0" Cursor="Hand" Width="90" Height="25" Margin="0,36,10,-36">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}">

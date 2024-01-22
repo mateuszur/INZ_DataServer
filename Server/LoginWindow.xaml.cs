@@ -27,7 +27,7 @@ namespace Server
     {
 
         private string username;// = "mateuszur";
-        private string password;// = "Pa$$w0rd";
+        private string password; //= "Pa$$w0rd";
         private int user_id;
         private int user_privilege;
 
@@ -60,8 +60,8 @@ namespace Server
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            username = UsernameTextBox.Text;
-            password = PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
+            username = "mateuszur";//UsernameTextBox.Text;
+            password = "Pa$$w0rd";// PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
         
 
 

@@ -47,6 +47,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Przyciski Start i Stop -->
@@ -67,7 +68,7 @@
 
                 <!--Port Serwera-->
                 <StackPanel Grid.Row="4" Orientation="Horizontal" >
-                    <TextBlock Text="Port serweraP:" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBlock Text="Port serwera:" Grid.Row="2" Width="148"  Margin="10" />
                     <TextBox Text="3333" IsReadOnly="True" Grid.Column="1" Margin="10" Width="100" />
                 </StackPanel>
 
@@ -94,7 +95,7 @@
                     <TextBlock Text="Ścieżka do lokalizacji plików użytkowników" Margin="10,0"/>
                 </StackPanel>
                 
-                <Button Content="Zapisz" Grid.Row="9" Margin="10"/>
+                <Button Content="Zapisz" Grid.Row="10" Margin="10"/>
 
             </Grid>
 

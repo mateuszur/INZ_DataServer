@@ -5,7 +5,10 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataServerGUI", "DataServerGUI.csproj", "{B0CD3E91-6BC5-42F7-9D7D-9B4234734E98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataServerService", "..\DataServer\DataServerService.csproj", "{5A07BCAC-E352-40CD-9FA5-8181CC85291A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataServerService", "..\DataServer\DataServerService.csproj", "{5A07BCAC-E352-40CD-9FA5-8181CC85291A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0CD3E91-6BC5-42F7-9D7D-9B4234734E98} = {B0CD3E91-6BC5-42F7-9D7D-9B4234734E98}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

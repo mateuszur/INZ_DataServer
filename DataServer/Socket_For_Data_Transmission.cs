@@ -69,12 +69,9 @@ namespace DataServerService
 
             // Utwórz obiekt TcpListener.
             server = new TcpListener(IPAddress.Any, port);
-
             // Zacznij nasłuchiwać połączeń przychodzących.
             server.Start();
-
             Console.WriteLine("Serwer jest uruchomiony. Oczekiwanie na połączenia...");
-            
             while (true)
             {
                 // Akceptuj połączenie od klienta.
@@ -87,13 +84,12 @@ namespace DataServerService
                 // Utwórz obiekt StreamReader do odczytu z NetworkStream.
                 StreamReader reader = new StreamReader(stream);
 
-
                 byte[] data = new byte[256];
                 int bytes = stream.Read(data, 0, data.Length);
                 string responseData = Encoding.ASCII.GetString(data, 0, bytes);
                 Console.WriteLine("Odebrano: {0}", responseData);
 
-                // Odpowiedź
+                // Odpowiedź dotycząca stanu serwera
                 if (responseData == "Ping")
                 {    
                     Console.WriteLine(DateTime.Now.ToString()+ " Otrzymano PING");
@@ -101,6 +97,8 @@ namespace DataServerService
                     stream.Write(msg, 0, msg.Length);
 
                 }
+
+                //Logowanie
                 if (responseData.StartsWith("Login"))
                 {
                     Console.WriteLine(" Otrzymano prośbę o login");
@@ -135,9 +133,6 @@ namespace DataServerService
                         client.Close();
                     }
                 }
-
-
-
                 if (responseData.StartsWith("Logout"))
                 {
                     Console.WriteLine(" Otrzymano prośbę o wylogowanie");
@@ -153,7 +148,6 @@ namespace DataServerService
                         stream.Write(msg, 0, msg.Length);
                     }
                 }
-
 
                 //Treansfer plików
                 if (responseData.StartsWith("Upload"))
@@ -208,12 +202,10 @@ namespace DataServerService
                     }
 
                 }
-
                 if (responseData.StartsWith("Download"))
                 {
 
                 }
-
                 if (responseData.StartsWith("List"))
                 {
                     FileTransferManager fileTransferManager = new FileTransferManager();
@@ -277,10 +269,7 @@ namespace DataServerService
 
                 }
 
-
-                client.Close();
-
-                
+                client.Close();   
             }
 
         }
