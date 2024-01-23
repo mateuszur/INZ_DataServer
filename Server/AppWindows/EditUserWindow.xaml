@@ -21,10 +21,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label Content="ID" Grid.Row="1" Grid.Column="0"/>
-        <TextBox x:Name="IDTextBox" Grid.Row="1" Grid.Column="1"/>
+        <TextBox x:Name="IDTextBox" Grid.Row="1" Grid.Column="1" KeyDown="IDTextBox_TextChanged" PreviewTextInput="IDTextBox_PreviewTextInput" />
 
         <Label Content="Imię" Grid.Row="2" Grid.Column="0"/>
         <TextBox x:Name="NameTextBox" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
@@ -33,8 +34,9 @@
         <TextBox x:Name="SurnameTextBox" Grid.Row="3" Grid.Column="1" IsReadOnly="True"/>
 
         
+        <RadioButton x:Name="radioButtonPasswor" Content="Zmiana hasła" Checked="Password_Change_RadioButton" Grid.Row="4" Grid.Column="1" IsEnabled="False"/>
 
-        <Label Content="Hasło" Grid.Row="5" Grid.Column="0"/>
+            <Label Content="Hasło" Grid.Row="5" Grid.Column="0"/>
         <PasswordBox x:Name="Password1" Grid.Row="5" Grid.Column="1" IsEnabled="False"/>
 
         <Label Content="Powtórz hasło" Grid.Row="6" Grid.Column="0"/>

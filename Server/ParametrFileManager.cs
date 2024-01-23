@@ -9,7 +9,7 @@ namespace Server
 
         public ParametrFileManager()
         {
-            this.filePath = ".\\DataBaseConnection\\ConnectionString.txt";
+            this.filePath = ".\\Config\\ConnectionString.txt";
         }
         public void SaveParameter(string parameter)
         {

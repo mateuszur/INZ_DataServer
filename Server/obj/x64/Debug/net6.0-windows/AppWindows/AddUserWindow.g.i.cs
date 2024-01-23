@@ -117,7 +117,7 @@ namespace DataServerGUI.AppWindows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DataServerGUI;V1.0.0.0;component/appwindows/adduserwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DataServerGUI;component/appwindows/adduserwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\AppWindows\AddUserWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

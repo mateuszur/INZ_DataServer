@@ -47,7 +47,7 @@ namespace Server
 
             try
             {
-                if (user_privilege == 1 || user_privilege == 2)
+                if (user_privilege == 1)
                 {
                     connection_name.Open();
 
@@ -69,8 +69,8 @@ namespace Server
                             Privileges=data_from_querry.GetString(2),
                             Name = data_from_querry.GetString(3),
                             Surname= data_from_querry.GetString(4),
-                            Space_available = data_from_querry.GetString(5),
-                            Disk_space_used = data_from_querry.GetString(6),
+                            Space_available = data_from_querry.GetString(5) ?? "0",
+                            Disk_space_used = data_from_querry.GetString(6) ?? "0",
                         
                         };
 
@@ -88,6 +88,7 @@ namespace Server
             }
             catch (Exception ex)
             {
+                connection_name.Close();
                 MessageBox.Show("Otwieranie zarządzania użytkownikami... \n"+ ex);
             }
 

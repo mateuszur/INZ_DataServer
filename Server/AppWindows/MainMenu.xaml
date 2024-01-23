@@ -147,7 +147,7 @@
                                 Height="25"
                                 Click="Add_User_Click"
                                 Content="Dodaj użytkownika"
-                                Width="85" 
+                                Width="110" 
                                 HorizontalAlignment="Center"
                         />
                     </StackPanel>
@@ -158,7 +158,7 @@
                             Height="25"
                             Click="Edit_User_Click"
                             Content="Edituj użytkownika" 
-                            Width="85" 
+                            Width="110" 
                             HorizontalAlignment="Center" 
                          />
                     </StackPanel>
@@ -166,7 +166,7 @@
                     <StackPanel  Grid.Column="2">
                         <Button x:Name="Usunczlonka"
                             Grid.Column="2"
-                            Width="85"
+                            Width="110"
                             Height="25"
                             HorizontalAlignment="Center"
                             Click="Del_User_Click"

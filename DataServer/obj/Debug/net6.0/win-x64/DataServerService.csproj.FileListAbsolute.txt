@@ -570,3 +570,15 @@ C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\krbcc64.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\bin\Debug\net6.0\win-x64\Config\ServerConfig.txt
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\Debug\net6.0\win-x64\Config\ServerConfig.txt
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\appsettings.Development.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\appsettings.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\bin\Debug\net6.0\win-x64\appsettings.Development.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\bin\Debug\net6.0\win-x64\appsettings.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\bin\Debug\net6.0\win-x64\DataServerService.deps.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\bin\Debug\net6.0\win-x64\DataServerService.runtimeconfig.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\Config\ServerConfig.txt
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\DataServerService.exe
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\DataServerService.deps.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\DataServerService.runtimeconfig.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\DataServerService.dll
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\Debug\net6.0\win-x64\DataServerService.pdb

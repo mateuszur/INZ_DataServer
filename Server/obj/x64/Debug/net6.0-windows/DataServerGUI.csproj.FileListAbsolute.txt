@@ -94,3 +94,9 @@ C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.runtimeconfig.json
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.dll
 C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik\x64\Debug\net6.0-windows\DataServerGUI.pdb
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\DataServerGUI.exe
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\DataServerGUI.deps.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\DataServerGUI.runtimeconfig.json
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\DataServerGUI.dll
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\DataServerGUI.pdb
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście\x64\Debug\net6.0-windows\Config\ConnectionString.txt

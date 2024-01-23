@@ -16,6 +16,6 @@ namespace Server
         public string Surname { get; set; }
         public string Space_available { get; set; }
 
-        public string Disk_space_used { get; set; }
+        public string Disk_space_used { get; set; } = "0";
     }
 }

@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
-    <BaseOutputPath>C:\Users\matik\source\repos\mateuszur\INZ_Server\Wynik</BaseOutputPath>
+    <BaseOutputPath>C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DataBaseConnection\ConnectionString.txt">
+    <None Update="Config\ConnectionString.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
