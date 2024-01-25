@@ -1,5 +1,0 @@
-﻿DatabaseAddress=192.168.1.51
-DataServerPort=3333
-FTPServerPort=3334
-CertificatePath=
-FilePath=
