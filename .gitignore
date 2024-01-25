@@ -2,4 +2,4 @@
 # Ten plik .gitignore został utworzony automatycznie przez Microsoft(R) Visual Studio.
 ################################################################################
 
-/Wyjście/Release/net6.0/Config
+/Wyjście/

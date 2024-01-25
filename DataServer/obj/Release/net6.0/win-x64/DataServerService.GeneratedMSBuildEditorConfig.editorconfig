@@ -12,4 +12,4 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = 
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = DataServerService
-build_property.ProjectDir = C:\Users\matik\source\repos\mateuszur\INZ_Server\DataServer\
+build_property.ProjectDir = C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataServer\
