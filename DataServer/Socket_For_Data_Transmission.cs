@@ -92,7 +92,7 @@ namespace DataServerService
                 // Odpowiedź dotycząca stanu serwera
                 if (responseData == "Ping")
                 {    
-                    Console.WriteLine(DateTime.Now.ToString()+ " Otrzymano PING");
+                 //   Console.WriteLine(DateTime.Now.ToString()+ " Otrzymano PING");
                     byte[] msg = Encoding.ASCII.GetBytes("Pong");
                     stream.Write(msg, 0, msg.Length);
 

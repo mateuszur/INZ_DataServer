@@ -1,4 +1,5 @@
-﻿using DataServerService.UsersManager;
+﻿using DataServerService.Configurations;
+using DataServerService.UsersManager;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace DataServerService
 
 
         //Baza danych
-        private string connection_string = "Server=192.168.1.51;Uid=inz;Pwd=Pa$$w0rd;Database=Server_inz_MU23/24;";
-        private MySqlConnection connection_name = new MySqlConnection();
+        ParametrFileManager fileManager = new ParametrFileManager();
+        private string connection_string;
+        MySqlConnection connection_name = new MySqlConnection();
 
         private UserDetails userDetails = new UserDetails();
 
