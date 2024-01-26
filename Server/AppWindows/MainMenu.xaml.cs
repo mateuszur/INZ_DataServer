@@ -8,6 +8,7 @@ using DataServerGUI.Configurations;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace Server
 {
@@ -18,8 +19,8 @@ namespace Server
         private int user_privilege;
         private string username;
         private string dbAddress = "";
-        private string usernameFTP="";
-        private string passwordFTP="";
+        private string usernameFTP = "";
+        private string passwordFTP = "";
         private string portFTP = "";
         private string inpuCert = "";
         private string passwordCert;
@@ -140,7 +141,7 @@ namespace Server
                     CertificatePath.TextWrapping = TextWrapping.WrapWithOverflow;
                     CertificatePath.Text = inpuCert;
                 }
-            }catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show("Probem z dostępem do plików!.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -155,7 +156,7 @@ namespace Server
                 {
                     CheckFileExists = false,
                     CheckPathExists = true,
-                    FileName="Pliki DataSerwer",
+                    FileName = "Pliki DataSerwer",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                     ValidateNames = false
                 };
@@ -171,7 +172,7 @@ namespace Server
 
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Probem z dostępem do plików!.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -214,7 +215,7 @@ namespace Server
                 if (string.IsNullOrEmpty(passwordCert))
                 {
                     CertificatePass.BorderBrush = Brushes.Red; CertificatePass.Focus();
-                    
+
                     return;
                 }
 
@@ -244,8 +245,8 @@ namespace Server
                 ReadPFX readPFX = new ReadPFX();
 
                 readPFX.CertificateReader(inpuCert, passwordCert, config);
-               // readWriteConfig.WriteConfiguration(config);
-            }catch (Exception ex)
+                // readWriteConfig.WriteConfiguration(config);
+            } catch (Exception ex)
             {
                 MessageBox.Show("Błąd zapisu konfiguracji", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -254,7 +255,7 @@ namespace Server
 
         private string DataBaseAddressValidation(string DBAddress)
         {
-            var pattern= @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+            var pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
             if (!string.IsNullOrWhiteSpace(DBAddress))
             {
@@ -282,7 +283,7 @@ namespace Server
 
             if (!string.IsNullOrWhiteSpace(SFTPPort))
             {
-                if (!Regex.IsMatch(SFTPPort, pattern) )
+                if (!Regex.IsMatch(SFTPPort, pattern))
                 {
                     MessageBox.Show("Obsługiwany wyłącznie numery portów", "Błąd danych", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "";
@@ -301,6 +302,27 @@ namespace Server
             }
         }
 
+
+        private void Start_Server_Button(object sender, EventArgs e)
+        {
+            try
+            {
+
+                Process.Start("..\\DataSerwer\\DataSerwer.exe");
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Podczas uruchomienia serwera obsługującego klientów wystąpił błąd!", "Błąd startu serwera!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+                
+            }
+        }
+
+        private void Stop_Server_Button(object sender, EventArgs e)
+        {
+
+        }
 
 
     }

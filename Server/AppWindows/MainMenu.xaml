@@ -53,8 +53,8 @@
                 </Grid.RowDefinitions>
 
                 <!-- Przyciski Start i Stop -->
-                <Button Content="Start" Grid.Row="0" Margin="10"/>
-                <Button Content="Stop" Grid.Row="1" Margin="10"/>
+                <Button Click="Start_Server_Button" Content="Start" Grid.Row="0" Margin="10"/>
+                <Button Click="Stop_Server_Button" Content="Stop" Grid.Row="1" Margin="10"/>
 
                 <!-- Adres bazy danych -->
                 <StackPanel Grid.Row="2" Orientation="Horizontal" >

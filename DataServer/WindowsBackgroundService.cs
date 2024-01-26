@@ -15,7 +15,7 @@ namespace DataServerService
         {
             try
             {
-                _DataServerService.Server_Data_Transmission_Init();
+                _DataServerService.Server_Data_Transmission();
 
                 // Rozpocznij nas³uchiwanie na po³¹czenia
                 _DataServerService.Server_Data_Transmission_Listner();

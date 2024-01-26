@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using DataServerService.Configurations;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,13 @@ namespace DataServerService
         string FTP_password = "Pa$$w0rd";
 
 
+        //Baza danych
+        private string connection_string;
+
+        //Połączenie do bazy
+        ParametrFileManager fileManager = new ParametrFileManager();
+        MySqlConnection connection_name = new MySqlConnection();
+
 
         TcpListener server;
 
@@ -34,10 +42,13 @@ namespace DataServerService
         static System.Timers.Timer aTimer;
 
 
-        public void Server_Data_Transmission_Init()
+        public Socket_For_Data_Transmission()
         {
             this.port = 3333;
-            this.server = null;
+           
+            connection_string = fileManager.ReadParameter();
+            connection_name.ConnectionString = connection_string;
+            Server_Data_Transmission_Listner();
         }
 
 
@@ -46,16 +57,6 @@ namespace DataServerService
 
         public void Server_Data_Transmission_Listner()
         {
-           
-
-
-            //Baza danych
-            string connection_string = "Server=polsl.online;Uid=inz;Pwd=Pa$$w0rd;Database=inz_MU23/24;";
-            MySqlConnection connection_name = new MySqlConnection();
-
-
-            //Połączenie do bazy
-            connection_name.ConnectionString = connection_string;
 
             //Utworzenie obiektu timer na potrzeby sprawdzania stanu sesji w bazie
 
@@ -71,6 +72,7 @@ namespace DataServerService
             server = new TcpListener(IPAddress.Any, port);
             // Zacznij nasłuchiwać połączeń przychodzących.
             server.Start();
+           
             Console.WriteLine("Serwer jest uruchomiony. Oczekiwanie na połączenia...");
             while (true)
             {
