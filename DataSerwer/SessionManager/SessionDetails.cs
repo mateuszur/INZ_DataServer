@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataServer { 
+namespace DataSerwer.SessionManager
+{
     internal class SessionDetails
     {
         public string SessionID { get; set; }

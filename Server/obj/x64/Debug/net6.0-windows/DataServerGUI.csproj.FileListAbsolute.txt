@@ -121,3 +121,8 @@ C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\bin\Debug\net6.0-windows
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\bin\Debug\net6.0-windows\DataServerGUI\net6.0-windows\runtimes\win-x64\native\krb5_64.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\bin\Debug\net6.0-windows\DataServerGUI\net6.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\bin\Debug\net6.0-windows\DataServerGUI\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\net6.0-windows\DataServerGUI.exe
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\net6.0-windows\DataServerGUI.deps.json
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\net6.0-windows\DataServerGUI.runtimeconfig.json
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\net6.0-windows\DataServerGUI.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\net6.0-windows\DataServerGUI.pdb

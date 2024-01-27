@@ -1,9 +1,13 @@
-﻿using DataServer.Configurations;
+﻿using DataSerwer.Configuration;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace DataServer
+namespace DataSerwer.SessionManager
 {
     public class SessionManager
     {
@@ -18,12 +22,17 @@ namespace DataServer
 
         private SessionDetails sessionDetails = new SessionDetails();
 
+        public SessionManager()
+        {
+            connection_string = fileManager.ReadParameter();
+            connection_name.ConnectionString = connection_string;
+        }
 
         //przygotowuje odpowiedź dla klieta po utworzeniu sesji
         public string SessionRespon()
         {
 
-            string respon = sessionDetails.SessionID + "," + sessionDetails.DataTimeEnd + ","+userDetails.Privileges + "," + userDetails.Login + "," + userDetails.ID;
+            string respon = sessionDetails.SessionID + "," + sessionDetails.DataTimeEnd + "," + userDetails.Privileges + "," + userDetails.Login + "," + userDetails.ID;
             return respon;
         }
 
@@ -285,4 +294,3 @@ namespace DataServer
 
     }
 }
-

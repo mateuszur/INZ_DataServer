@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+	  <BaseOutputPath>C:\Users\matik\source\repos\mateuszur\INZ_Server\Wyjście</BaseOutputPath>
+	  <Platforms>x64</Platforms>
+	  <StartupObject>DataSerwer.Program</StartupObject>
+	  <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	  <OutputPath>..\Wyjście\Debug\DataSerwer\</OutputPath>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <OutputType>Exe</OutputType>
+	 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.3.0" />
+  </ItemGroup>
+
+</Project>

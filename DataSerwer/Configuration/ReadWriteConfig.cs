@@ -4,10 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
-namespace DataServer.Configurations
+namespace DataSerwer.Configuration
 {
     public class ReadWriteConfig
     {
@@ -48,7 +46,8 @@ namespace DataServer.Configurations
                         }
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine("Błąd podczas odczytu pliku konfiguracyjnego!");
             }

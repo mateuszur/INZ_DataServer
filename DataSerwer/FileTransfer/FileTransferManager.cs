@@ -1,9 +1,14 @@
-﻿using DataServer.Configurations;
+﻿using DataSerwer.Configuration;
 using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace DataServer
+namespace DataSerwer.FileTransfer
 {
     public class FileTransferManager : FileDetails
     {
@@ -19,22 +24,22 @@ namespace DataServer
         MySqlConnection connection_name = new MySqlConnection();
 
         //weryfikacja sesji przez przystąpieniem do przeysłania pliku
-        public bool IsSessionValid(string sessionID,int userID)
+        public bool IsSessionValid(string sessionID, int userID)
         {
-            if(IsSessionValidWorker(sessionID, userID))
+            if (IsSessionValidWorker(sessionID, userID))
             {
                 return true;
             }
             return false;
         }
-        private bool IsSessionValidWorker(string sessionID,int userID)
+        private bool IsSessionValidWorker(string sessionID, int userID)
         {
             try
             {
                 connection_name.ConnectionString = connection_string;
 
                 string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID= @userID";
-                int result=0;
+                int result = 0;
                 MySqlCommand command = new MySqlCommand(query, connection_name);
                 connection_name.Open();
                 command.Parameters.AddWithValue("@sessionID", sessionID);
@@ -45,7 +50,7 @@ namespace DataServer
                     result = int.Parse(data_from_querry.GetString(0));
                 }
 
-                if (result == 1 )
+                if (result == 1)
                 {
                     connection_name.Close();
                     return true;
@@ -55,7 +60,8 @@ namespace DataServer
                     connection_name.Close();
                     return false;
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 connection_name.Close();
                 return false;
@@ -69,20 +75,22 @@ namespace DataServer
         //weryfiakcja dsotępności miejca w systemie dla użytkownika
         public bool HasUserFreeSpace(FileDetails fileDetails)
         {
-            if(HasUserFreeSpaceWorke(fileDetails)) {
-           
+            if (HasUserFreeSpaceWorke(fileDetails))
+            {
+
                 return true;
 
-            }else { return false; }
+            }
+            else { return false; }
 
         }
-        
+
         private bool HasUserFreeSpaceWorke(FileDetails fileDetails)
         {
             try
             {
                 connection_name.ConnectionString = connection_string;
-                
+
                 string querry = "SELECT Disk_space_used, Space_available FROM `View_Disk_space_used_by_Users` WHERE ID= @userID;";
                 int Disk_space_used = 0;
                 int Space_available = 0;
@@ -94,18 +102,19 @@ namespace DataServer
                 connection_name.Open();
                 MySqlDataReader data_from_querry = command.ExecuteReader();
 
-                while(data_from_querry.Read())
+                while (data_from_querry.Read())
                 {
-                    Disk_space_used= int.Parse(data_from_querry.GetString(0));
+                    Disk_space_used = int.Parse(data_from_querry.GetString(0));
                     Space_available = int.Parse(data_from_querry.GetString(1));
                 }
                 connection_name.Close();
 
-                if((Disk_space_used+ fileDetails.FileSize)<Space_available)
+                if ((Disk_space_used + fileDetails.FileSize) < Space_available)
                 {
                     return true;
 
-                }else
+                }
+                else
                 {
                     return false;
                 }
@@ -118,7 +127,6 @@ namespace DataServer
             }
 
         }
-        //weryfiakcja dsotępności miejca w systemie dla użytkownika
 
 
 
@@ -153,7 +161,7 @@ namespace DataServer
                 connection_name.Close();
 
                 CheckCreatePath(filePath, fileDetails);
-                
+
             }
             catch (Exception ex)
             {
@@ -161,7 +169,7 @@ namespace DataServer
             }
         }
 
-        private void  CreateFileID(FileDetails fileDetails)
+        private void CreateFileID(FileDetails fileDetails)
         {
             try
             {
@@ -174,10 +182,11 @@ namespace DataServer
                 }
 
                 fileDetails.FileID = tempFileID;
-            }catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                    }
+            }
         }
 
 
@@ -190,15 +199,16 @@ namespace DataServer
                 {
                     Directory.CreateDirectory(path);
                     return;
-                    
+
                 }
                 else
                 {
                     return;
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("  Błąd podczas tworzenia folderu użytkownika: "+ex.Message);
+                Console.WriteLine("  Błąd podczas tworzenia folderu użytkownika: " + ex.Message);
                 return;
             }
         }
@@ -209,7 +219,7 @@ namespace DataServer
         {
             try
             {
-                string responString = "/user/User" + fileDetails.userID + "/" + fileDetails.FileID  + fileDetails.FileType;
+                string responString = "/user/User" + fileDetails.userID + "/" + fileDetails.FileID + fileDetails.FileType;
                 return responString;
 
             }
@@ -217,12 +227,13 @@ namespace DataServer
             {
                 string error = "error";
                 Console.WriteLine(ex.Message);
-                return error;            }
+                return error;
+            }
 
         }
 
 
-        public List<FileDetails> GetFileList(List<FileDetails>listOfFiles, int userID)
+        public List<FileDetails> GetFileList(List<FileDetails> listOfFiles, int userID)
         {
             try
             {
@@ -256,9 +267,10 @@ namespace DataServer
 
 
                 return listOfFiles;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("  Błąd pobiernaia listy plików:"+ex.Message);
+                Console.WriteLine("  Błąd pobiernaia listy plików:" + ex.Message);
                 connection_name.Close();
                 listOfFiles = null;
                 return listOfFiles;
@@ -268,13 +280,13 @@ namespace DataServer
 
         public string GetFileListRespon(List<FileDetails> listOfFiles)
         {
-            string respon="";
+            string respon = "";
 
 
             foreach (FileDetails file in listOfFiles)
             {
 
-                respon = respon+file.FileName+" "+file.FileSize+" "+file.FileType+" "+file.DateOfTransfer+",";
+                respon = respon + file.FileName + " " + file.FileSize + " " + file.FileType + " " + file.DateOfTransfer + ",";
 
             }
 

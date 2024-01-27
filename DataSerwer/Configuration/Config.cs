@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataServer.Configurations
+namespace DataSerwer.Configuration
 {
     public class Config
     {
@@ -14,8 +14,7 @@ namespace DataServer.Configurations
         public string FTPPassword { get; set; }
         public string CertificatePublicKey { get; set; }
         public string CertificatePrivateKey { get; set; }
-        
+
         public string FilePath { get; set; }
     }
-
 }

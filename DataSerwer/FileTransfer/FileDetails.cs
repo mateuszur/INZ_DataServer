@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataServer
+namespace DataSerwer.FileTransfer
 {
     public class FileDetails
     {
-        
+
         public string FileID { get; set; }
         public string FileName { get; set; }
         public int FileSize { get; set; }

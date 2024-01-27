@@ -1,6 +1,10 @@
-﻿using DataServer.Configurations;
+﻿using DataSerwer.Configuration;
+using DataSerwer.FileTransfer;
+using DataSerwer.SessionManager;
 using MySql.Data.MySqlClient;
-using System.Data;
+using System.Collections.Generic;
+using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,11 +12,8 @@ using System.Timers;
 
 namespace DataServer
 {
-    public  class Socket_For_Data_Transmission
+    public class Socket_For_Data_Transmission
     {
-
-
-
         // konfiguracja do zaczytania z pliku
         private int port;
         string FTP_username = "user";
@@ -23,8 +24,8 @@ namespace DataServer
         private string connection_string;
 
         //Połączenie do bazy
-        ParametrFileManager fileManager = new ParametrFileManager();
-        MySqlConnection connection_name = new MySqlConnection();
+         static ParametrFileManager fileManager = new ParametrFileManager();
+         static MySqlConnection connection_name = new MySqlConnection();
 
 
         TcpListener server;
@@ -36,7 +37,7 @@ namespace DataServer
         static System.Timers.Timer aTimer;
 
 
-        public  Socket_For_Data_Transmission()
+        public Socket_For_Data_Transmission()
         {
             this.port = 3333;
 
@@ -271,7 +272,7 @@ namespace DataServer
         }
 
 
-        //obsługa wykonywania czasu czyszczenia bazy z sesji starcszych jak 24h
+        //obsługa wykonywania czasu czyszczenia bazy z sesji starszych jak 24h
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             DBclean();
@@ -282,9 +283,6 @@ namespace DataServer
         {
             try
             {
-                string connection_string = "Server=192.168.1.51;Uid=inz;Pwd=Pa$$w0rd;Database=Server_inz_MU23/24;";
-                MySqlConnection connection_name = new MySqlConnection();
-                connection_name.ConnectionString = connection_string;
                 connection_name.Open();
 
                 string sqlQery = "UPDATE `Sesion` SET `Active` = 0 WHERE `End_Sesion_Date` < @dateNow  AND `Active` = 1;";
