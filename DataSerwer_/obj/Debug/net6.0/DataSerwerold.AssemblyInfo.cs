@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataSerwerold")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+655f6a8f5a71d1b6f3d424e405d50b315d36be3c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataSerwerold")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataSerwerold")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

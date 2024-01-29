@@ -84,8 +84,11 @@ namespace DataServer
                 byte[] data = new byte[256];
                 int bytes = stream.Read(data, 0, data.Length);
                 string responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Odebrano: {0}", responseData);
 
+                if (responseData != "Ping")
+                {
+                    Console.WriteLine("Odebrano: {0}", responseData);
+                }
                 // Odpowiedź dotycząca stanu serwera
                 if (responseData == "Ping")
                 {
@@ -149,15 +152,16 @@ namespace DataServer
                 //Treansfer plików
                 if (responseData.StartsWith("Upload"))
                 {
-                    Console.WriteLine(" Otrzymano prośbę o przesłanie pliku...");
-                    string[] parts = responseData.Split(' ');
-
-                    //Tworzenie pliku w bazie jeżeli pochodzi z obecnej sesji
                     FileTransferManager fileTransferManager = new FileTransferManager();
                     FileDetails fileDetails = new FileDetails();
+                    Console.WriteLine(" Otrzymano prośbę o przesłanie pliku...");
+                    string[] parts = responseData.Split(' ');
+                    bool result = fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2]));
+                    //Tworzenie pliku w bazie jeżeli pochodzi z obecnej sesji
+
                     IPAddress clientIpAddress = remoteEndPoint.Address;
 
-                    if (parts.Length == 6 && fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2])))
+                    if (parts.Length == 6 && result)
                     {
 
                         fileDetails.userID = int.Parse(parts[2]);
@@ -201,8 +205,86 @@ namespace DataServer
                 }
                 if (responseData.StartsWith("Download"))
                 {
+                    FileTransferManager fileTransferManager = new FileTransferManager();
+                    FileDetails fileDetails = new FileDetails();
+                    IPAddress clientIpAddress = remoteEndPoint.Address;
+
+                    Console.WriteLine(" Otrzymano prośbę o pobranie pliku użytkownika.");
+                    string[] parts = responseData.Split(' ');
+
+                    if (parts.Length == 4 && fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2])))
+                    {
+                        if (fileTransferManager.IsFileExist(parts[3], int.Parse(parts[2]), fileDetails))
+                        {
+                            byte[] msg = Encoding.ASCII.GetBytes("YourPathToDownload " + fileTransferManager.CreateFileRespon(fileDetails) + " " + FTP_username + " " + FTP_password);
+
+                            stream.Write(msg, 0, msg.Length);
+
+                            Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID: " + parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
+                            client.Close();
+                        }
+                        else
+                        {
+                            byte[] msg = Encoding.ASCII.GetBytes("FileDoesntExist");
+
+                            stream.Write(msg, 0, msg.Length);
+                            Console.WriteLine(" " + DateTime.Now + " Nie odnaleziponou pliku o nazwie: " + parts[3]);
+                            client.Close();
+                        }
+                    }
+                    else
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("SessionIsNotValid");
+
+                        stream.Write(msg, 0, msg.Length);
+                        Console.WriteLine(" " + DateTime.Now + " Unieważniono sesję użytkonika o ID:" + parts[2]);
+                        client.Close();
+                    }
 
                 }
+                if (responseData.StartsWith("Delete"))
+                {
+                    FileTransferManager fileTransferManager = new FileTransferManager();
+                    FileDetails fileDetails = new FileDetails();
+                    IPAddress clientIpAddress = remoteEndPoint.Address;
+
+                    Console.WriteLine(" Otrzymano prośbę o usunięcie pliku użytkownika.");
+                    string[] parts = responseData.Split(' ');
+
+                    if (parts.Length == 4 && fileTransferManager.IsSessionValid(parts[1], int.Parse(parts[2])))
+                    {
+                        if (fileTransferManager.IsFileExist(parts[3], int.Parse(parts[2]), fileDetails))
+                        {
+
+                            fileTransferManager.Delete(parts[3], int.Parse(parts[2]), fileDetails);
+                           
+                            byte[] msg = Encoding.ASCII.GetBytes("FileDeletedSuccessfully");
+
+                            stream.Write(msg, 0, msg.Length);
+
+                            Console.WriteLine(" " + DateTime.Now + " Usuniętop plik użytkownika o ID: " + parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
+                            client.Close();
+                        }
+                        else
+                        {
+                            byte[] msg = Encoding.ASCII.GetBytes("FileDoesntExist");
+
+                            stream.Write(msg, 0, msg.Length);
+                            Console.WriteLine(" " + DateTime.Now + " Nie odnaleziponou pliku o nazwie: " + parts[3]);
+                            client.Close();
+                        }
+                    }
+                    else
+                    {
+                        byte[] msg = Encoding.ASCII.GetBytes("SessionIsNotValid");
+
+                        stream.Write(msg, 0, msg.Length);
+                        Console.WriteLine(" " + DateTime.Now + " Unieważniono sesję użytkonika o ID:" + parts[2]);
+                        client.Close();
+                    }
+
+                }
+
                 if (responseData.StartsWith("List"))
                 {
                     FileTransferManager fileTransferManager = new FileTransferManager();

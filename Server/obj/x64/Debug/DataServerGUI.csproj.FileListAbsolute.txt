@@ -54,3 +54,4 @@ C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\Da
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\DataServerGUI.runtimeconfig.json
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\DataServerGUI.dll
 C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataServerGUI\DataServerGUI.pdb
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\obj\x64\Debug\DataServerGUI.sourcelink.json

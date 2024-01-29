@@ -1,5 +1,7 @@
 ﻿using DataSerwer.Configuration;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Common;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +9,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Mysqlx.Session;
+using Mysqlx.Crud;
 
 namespace DataSerwer.FileTransfer
 {
@@ -16,12 +20,21 @@ namespace DataSerwer.FileTransfer
         string filePath = "C:\\Users\\Administrator\\Desktop\\TestUser";
 
         //obiekt dla potrze przetwarzania zapytania o utworzenie/ usunięcie/ wyświetlenie listy plikó
-        private FileDetails fileDetails = new FileDetails();
+        //private FileDetails fileDetails = new FileDetails();
 
         //Baza danych do dodania zaczytanie z pliku konfiguracyjnego
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
         MySqlConnection connection_name = new MySqlConnection();
+
+
+        public FileTransferManager()
+        {
+
+            connection_string = fileManager.ReadParameter();
+            connection_name.ConnectionString = connection_string;
+        }
+
 
         //weryfikacja sesji przez przystąpieniem do przeysłania pliku
         public bool IsSessionValid(string sessionID, int userID)
@@ -36,7 +49,6 @@ namespace DataSerwer.FileTransfer
         {
             try
             {
-                connection_name.ConnectionString = connection_string;
 
                 string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID= @userID";
                 int result = 0;
@@ -47,7 +59,7 @@ namespace DataSerwer.FileTransfer
                 MySqlDataReader data_from_querry = command.ExecuteReader();
                 while (data_from_querry.Read())
                 {
-                    result = int.Parse(data_from_querry.GetString(0));
+                    result = data_from_querry.GetInt32(0);
                 }
 
                 if (result == 1)
@@ -104,8 +116,8 @@ namespace DataSerwer.FileTransfer
 
                 while (data_from_querry.Read())
                 {
-                    Disk_space_used = int.Parse(data_from_querry.GetString(0));
-                    Space_available = int.Parse(data_from_querry.GetString(1));
+                    Disk_space_used = data_from_querry.GetInt32(0);
+                    Space_available = data_from_querry.GetInt32(1);
                 }
                 connection_name.Close();
 
@@ -237,10 +249,6 @@ namespace DataSerwer.FileTransfer
         {
             try
             {
-                connection_name.ConnectionString = connection_string;
-
-
-
                 string querry = "SELECT `File_name`, File_Size, File_type, Date_of_Transfer FROM `View_Files_List` WHERE User_ID= @userID;";
 
 
@@ -256,9 +264,10 @@ namespace DataSerwer.FileTransfer
                     FileDetails feld = new FileDetails
                     {
                         FileName = data_from_querry.GetString(0),
-                        FileSize = int.Parse(data_from_querry.GetString(1)),
+                        FileSize = data_from_querry.GetInt32(1),
                         FileType = data_from_querry.GetString(2),
-                        DateOfTransfer = DateTime.ParseExact(data_from_querry.GetString(3), "dd.MM.yyyy HH:mm:ss", null),
+                        DateOfTransfer = data_from_querry.GetDateTime(3),
+                     
                     };
                     listOfFiles.Add(feld);
 
@@ -278,6 +287,10 @@ namespace DataSerwer.FileTransfer
         }
 
 
+
+
+
+
         public string GetFileListRespon(List<FileDetails> listOfFiles)
         {
             string respon = "";
@@ -292,6 +305,166 @@ namespace DataSerwer.FileTransfer
 
 
             return respon;
+        }
+
+
+
+        public bool IsFileExist(string fileName, int userID, FileDetails fileDetails)
+        {
+            if (IsFileExistDB(fileName, userID, fileDetails) && IsFileExistOnServer(userID, fileDetails))
+            {
+                return true;
+
+            }
+            else { return false; }
+
+        }
+
+
+        private bool IsFileExistDB(string fileName, int userID, FileDetails fileDetails)
+        {
+            int result = 0;
+            try
+            {
+                string querry = "SELECT COUNT(ID) FROM `Vive_Files_Donwload` WHERE File_name LIKE @fileName  AND User_ID= @userID;";
+                string querry2 = "SELECT * FROM `Vive_Files_Donwload` WHERE File_name LIKE @fileName2  AND User_ID= @userID2;";
+
+                MySqlCommand command = new MySqlCommand(querry, connection_name);
+                command.Parameters.AddWithValue("@fileName", fileName);
+                command.Parameters.AddWithValue("@userID", userID);
+                connection_name.Open();
+                MySqlDataReader data_from_querry = command.ExecuteReader();
+
+                
+
+                while (data_from_querry.Read())
+                {
+                    result = data_from_querry.GetInt32(0);
+                }
+                connection_name.Close();
+               
+                if (result == 1)
+                {
+                    MySqlCommand command2 = new MySqlCommand(querry2, connection_name);
+                    command2.Parameters.AddWithValue("@fileName2", fileName);
+                    command2.Parameters.AddWithValue("@userID2", userID);
+                    connection_name.Open();
+                    MySqlDataReader data_from_querry2 = command2.ExecuteReader();
+
+              
+
+                    while (data_from_querry2.Read())
+                    {
+                        fileDetails.FileID = data_from_querry2.GetString(0);
+                        fileDetails.userID = data_from_querry2.GetInt32(1);
+                        fileDetails.FileName = data_from_querry2.GetString(2);
+                        fileDetails.FileType = data_from_querry2.GetString(3);
+                    }
+
+                    connection_name.Close();
+                    return true;
+                }
+                else
+                {
+
+                    if (IsFileExistOnServer(userID, fileDetails))
+                    {
+                        DeleteFileOnServer(userID, fileDetails);
+                    }
+
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd weryfikacji istnienia pliku: " + fileName + "\n" + ex.Message);
+                return false;
+
+            }
+        }
+
+        private bool IsFileExistOnServer(int userID, FileDetails fileDetails)
+        {
+            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID +  fileDetails.FileType;
+            try
+            {
+                if (File.Exists(userFilePath))
+                {
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd podczas sprawdzania, czy plik istnieje na dysku!\n"+ex.ToString());
+                return false;
+            }
+        }
+
+        private void DeleteFileOnServer(int userID, FileDetails fileDetails)
+        {
+
+            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID + "." + fileDetails.FileType;
+
+            try
+            {
+                if (File.Exists(userFilePath))
+                {
+                    File.Delete(userFilePath);
+                    
+                }
+ 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd podczas usuwania plików z serwera!");
+
+            }
+
+
+        }
+
+        private void DeleteFileInDB(string fileName, int userID, FileDetails fileDetails)
+        {
+            try
+            {
+
+                if(IsFileExistDB(fileName,userID,fileDetails))
+                {
+                    string querry = "DELETE FROM `File_Table` WHERE `File_Table`.`User_ID` = @userID AND `File_Table`.`File_name` LIKE @fileName AND `File_Table`.`ID` LIKE @fileID;";
+
+                    MySqlCommand command = new MySqlCommand(querry, connection_name);
+                  
+                    command.Parameters.AddWithValue("@userID", userID);
+                    command.Parameters.AddWithValue("@fileName", fileName);
+                    command.Parameters.AddWithValue("@fileID", fileDetails.FileID);
+
+                    connection_name.Open();
+                    MySqlDataReader data_from_querry = command.ExecuteReader();
+
+                }
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine("Błąd usuwania wpisu o pliku w DB" + ex.ToString());
+            }
+        }
+
+
+        public void Delete(string fileName, int userID, FileDetails fileDetails)
+        {
+            try {
+                DeleteFileInDB(fileName, userID, fileDetails);
+                DeleteFileOnServer(userID, fileDetails);
+            }catch(Exception ex)
+            {
+                Console.WriteLine("Błąd usuwania pliku!"+ex.ToString());
+            }
         }
 
     }

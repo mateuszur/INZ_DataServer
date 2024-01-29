@@ -14,3 +14,4 @@ C:\Users\matik\source\repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\refint\Dat
 C:\Users\matik\source\repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.pdb
 C:\Users\matik\source\repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.genruntimeconfig.cache
 C:\Users\matik\source\repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\ref\DataSerwer.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.sourcelink.json
