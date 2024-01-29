@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hXSN5YsNm9ZQpPP/r4p9Fmpdf1wt7i0t6grE19MR51KRJChSYMDFFJhtbThVsQNjJVbcXf3P2ntR6B4j9D1fTg==",
+  "dgSpecHash": "S2pqNQQ0jV9Gm02xlHmLBLoT5cnzDnCqGXOL4tgWw/dQzkOou4Qldt46ofsg/X8boFKMTO/QaqJ0TqyzrGgfeg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\matik\\source\\repos\\mateuszur\\INZ_Server\\DataSerwer\\DataSerwer.csproj",
+  "projectFilePath": "C:\\Users\\matik\\Source\\Repos\\mateuszur\\INZ_Server\\DataSerwer\\DataSerwer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matik\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\matik\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",
