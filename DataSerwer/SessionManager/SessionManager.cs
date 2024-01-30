@@ -202,9 +202,6 @@ namespace DataSerwer.SessionManager
             try
             {
 
-                string connection_string = "Server=192.168.1.51;Uid=inz;Pwd=Pa$$w0rd;Database=Server_inz_MU23/24;";
-                MySqlConnection connection_name = new MySqlConnection();
-                connection_name.ConnectionString = connection_string;
                 connection_name.Open();
 
                 string sqlQery = "SELECT COUNT(*) FROM `Sesion` where ID = @sesionID;";
@@ -247,9 +244,7 @@ namespace DataSerwer.SessionManager
         {
             try
             {
-                MySqlConnection connection_name = new MySqlConnection();
-                connection_name.ConnectionString = connection_string;
-
+                
                 string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
                 string data = "";
                 MySqlCommand command = new MySqlCommand(query, connection_name);

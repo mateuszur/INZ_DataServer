@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.IO;
 
 namespace Server
 {
@@ -18,6 +19,7 @@ namespace Server
 
         private int user_privilege;
         private string username;
+        private string serverAddress="";
         private string dbAddress = "";
         private string usernameFTP = "";
         private string passwordFTP = "";
@@ -25,6 +27,8 @@ namespace Server
         private string inpuCert = "";
         private string passwordCert;
         private string inputPath = "";
+
+        private string pemFileContent = "";
 
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
@@ -183,13 +187,21 @@ namespace Server
         {
             try
             {
+                serverAddress = ServerAddress.Text;
                 dbAddress = DBAddress.Text;
                 usernameFTP = FTPUsername.Text;
                 passwordFTP = FTPPassword.Password;
                 portFTP = SFTPPort.Text;
                 passwordCert = CertificatePass.Password;
 
-                if (DataBaseAddressValidation(dbAddress) == "")
+                if (AddressValidation(serverAddress) == "")
+                {
+                    ServerAddress.BorderBrush = Brushes.Red; ServerAddress.Focus();
+                    return;
+
+                }
+
+                if (AddressValidation(dbAddress) == "")
                 {
                     DBAddress.BorderBrush = Brushes.Red; DBAddress.Focus();
                     return;
@@ -244,8 +256,29 @@ namespace Server
                 ReadWriteConfig readWriteConfig = new ReadWriteConfig();
                 ReadPFX readPFX = new ReadPFX();
 
-                readPFX.CertificateReader(inpuCert, passwordCert, config);
-                // readWriteConfig.WriteConfiguration(config);
+                readPFX.CertificateReader2(inpuCert, passwordCert);
+
+                using (StreamReader reader = new StreamReader("..\\Config\\klucz_publiczny.pem"))
+                {
+                    // Odczytaj plik jako tekst
+                  pemFileContent = reader.ReadToEnd();
+
+               
+                }
+
+                ClientConfig clientConfig = new ClientConfig
+                {
+                    ServerAddress = serverAddress,
+                    PublicKey =pemFileContent,
+                };
+                
+                
+             
+              
+                readWriteConfig.WriteConfiguration(config);
+                readWriteConfig.WriteConfigurationClient(clientConfig);
+
+
             } catch (Exception ex)
             {
                 MessageBox.Show("Błąd zapisu konfiguracji", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -253,7 +286,7 @@ namespace Server
         }
 
 
-        private string DataBaseAddressValidation(string DBAddress)
+        private string AddressValidation(string DBAddress)
         {
             var pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 

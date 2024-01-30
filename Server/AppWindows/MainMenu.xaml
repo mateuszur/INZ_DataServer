@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Server"
 
         mc:Ignorable="d"
-        Title="Menu" Height="520" Width="749"
+        Title="Menu" Height="560" Width="760"
          ResizeMode="CanMinimize"
         >
 
@@ -50,6 +50,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Przyciski Start i Stop -->
@@ -68,49 +69,55 @@
                     <TextBox Text="3306" IsReadOnly="True" Grid.Column="1" Margin="10" Width="100" />
                 </StackPanel>
 
-                <!--Port Serwera-->
+                <!-- Adres bazy danych -->
                 <StackPanel Grid.Row="4" Orientation="Horizontal" >
+                    <TextBlock Text="Adres serwera" Grid.Row="2" Width="148"  Margin="10" />
+                    <TextBox x:Name="ServerAddress" Grid.Row="2" Margin="10" Width="200" />
+                </StackPanel>
+
+                <!--Port Serwera-->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" >
                     <TextBlock Text="Port serwera:" Grid.Row="2" Width="148"  Margin="10" />
                     <TextBox Text="3333" IsReadOnly="True" Grid.Column="1" Margin="10" Width="100" />
                 </StackPanel>
 
 
                 <!--Nazwa użytkowniak FTP-->
-                <StackPanel Grid.Row="5" Orientation="Horizontal" >
+                <StackPanel Grid.Row="6" Orientation="Horizontal" >
                     <TextBlock Text="Nazwa użytkownika dla FTP:" Grid.Row="2" Width="148"  Margin="10" />
                     <TextBox x:Name="FTPUsername" Grid.Column="1" Margin="10" Width="100"  />
                 </StackPanel>
                 <!--Hasło użytkowniak FTP-->
-                <StackPanel Grid.Row="6" Orientation="Horizontal" >
+                <StackPanel Grid.Row="7" Orientation="Horizontal" >
                     <TextBlock Text="Hasło użytkownika dla FTP:" Grid.Row="2" Width="148"  Margin="10" />
                     <PasswordBox x:Name="FTPPassword" Grid.Column="1" Margin="10" Width="100"  />
                 </StackPanel>
 
 
                 <!--Port Serwera FTP-->
-                <StackPanel Grid.Row="7" Orientation="Horizontal" >
+                <StackPanel Grid.Row="8" Orientation="Horizontal" >
                     <TextBlock Text="Port dla SFTP:" Grid.Row="2" Width="148"  Margin="10" />
                     <TextBox x:Name="SFTPPort" Grid.Column="1" Margin="10" Width="100"  />
                 </StackPanel>
 
                 <!-- Wybór certyfikatu HTTP -->
-                <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="10">
+                <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="10">
                     <Button x:Name="SelectCertificateButton" Content="Wybierz certyfikat" Width="150" Click="SelectCertificateFile"/>
                     <TextBlock  x:Name="CertificatePath" Text="Ścieżka do pliku certyfikatu" Margin="10,0" Width="300"/>
                 </StackPanel>
                 <!--Hasło certyfikatu -->
-                <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="10">
+                <StackPanel Grid.Row="10" Orientation="Horizontal" Margin="10">
                     <TextBlock Text="Hasło certyfiaktu"  Width="148"   />
                     <PasswordBox x:Name="CertificatePass" Grid.Column="1" Width="150" Height="20" />
                 </StackPanel>
 
                 <!-- Wybór ścieżki do lokalizacji plików użytkowników -->
-                <StackPanel Grid.Row="10" Orientation="Horizontal" Margin="10">
+                <StackPanel Grid.Row="11" Orientation="Horizontal" Margin="10">
                     <Button x:Name="SelectUserPathButton" Click="SelectUserPath" Content="Wybierz ścieżkę" Width="150"/>
                     <TextBlock x:Name="UserPath" Text="Ścieżka do lokalizacji plików użytkowników" Margin="10,0" Width="300"/>
                 </StackPanel>
                 
-                <Button Click="Save_Server_Config" Content="Zapisz" Grid.Row="11" Margin="10"/>
+                <Button Click="Save_Server_Config" Content="Zapisz" Grid.Row="12" Margin="10"/>
 
             </Grid>
 

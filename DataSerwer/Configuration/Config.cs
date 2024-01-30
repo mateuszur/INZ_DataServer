@@ -12,9 +12,7 @@ namespace DataSerwer.Configuration
         public string FTPServerPort { get; set; }
         public string FTPUsername { get; set; }
         public string FTPPassword { get; set; }
-        public string CertificatePublicKey { get; set; }
-        public string CertificatePrivateKey { get; set; }
-
+       
         public string FilePath { get; set; }
     }
 }

@@ -16,23 +16,34 @@ namespace DataSerwer.FileTransfer
 {
     public class FileTransferManager : FileDetails
     {
-        //dodać zaczytranie z pliku
-        string filePath = "C:\\Users\\Administrator\\Desktop\\TestUser";
 
-        //obiekt dla potrze przetwarzania zapytania o utworzenie/ usunięcie/ wyświetlenie listy plikó
-        //private FileDetails fileDetails = new FileDetails();
 
-        //Baza danych do dodania zaczytanie z pliku konfiguracyjnego
+        private int dataServerPort = 0;
+        private string ftpServerPort ="";
+        private string ftpUsername ="";
+        private string ftpPassword = "";
+        private string filePath = "";
+
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
         MySqlConnection connection_name = new MySqlConnection();
 
+        ReadWriteConfig configReadWrite = new ReadWriteConfig();
+        Config config = new Config();
 
         public FileTransferManager()
         {
 
             connection_string = fileManager.ReadParameter();
             connection_name.ConnectionString = connection_string;
+            configReadWrite.ReadConfiguration(config);
+            
+            
+            this.dataServerPort = config.DataServerPort;
+            this.ftpServerPort = config.FTPServerPort;
+            this.ftpUsername = config.FTPUsername;
+            this.ftpPassword = config.FTPPassword;
+            this.filePath= config.FilePath;
         }
 
 
@@ -101,7 +112,7 @@ namespace DataSerwer.FileTransfer
         {
             try
             {
-                connection_name.ConnectionString = connection_string;
+             
 
                 string querry = "SELECT Disk_space_used, Space_available FROM `View_Disk_space_used_by_Users` WHERE ID= @userID;";
                 int Disk_space_used = 0;

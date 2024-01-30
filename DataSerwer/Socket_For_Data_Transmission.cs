@@ -15,10 +15,14 @@ namespace DataServer
     public class Socket_For_Data_Transmission
     {
         // konfiguracja do zaczytania z pliku
-        private int port;
-        string FTP_username = "user";
-        string FTP_password = "Pa$$w0rd";
+        private int dataServerPort = 0;
+        private string ftpServerPort = "";
+        private string ftpUsername = "";
+        private string ftpPassword = "";
+        private string filePath = "";
 
+        ReadWriteConfig configReadWrite = new ReadWriteConfig();
+        Config config = new Config();
 
         //Baza danych
         private string connection_string;
@@ -39,10 +43,17 @@ namespace DataServer
 
         public Socket_For_Data_Transmission()
         {
-            this.port = 3333;
 
             connection_string = fileManager.ReadParameter();
             connection_name.ConnectionString = connection_string;
+
+            configReadWrite.ReadConfiguration(config);
+            this.dataServerPort = config.DataServerPort;
+            this.ftpServerPort = config.FTPServerPort;
+            this.ftpUsername = config.FTPUsername;
+            this.ftpPassword = config.FTPPassword;
+            this.filePath = config.FilePath;
+
             Server_Data_Transmission_Listner();
         }
 
@@ -64,7 +75,7 @@ namespace DataServer
 
 
             // Utwórz obiekt TcpListener.
-            server = new TcpListener(IPAddress.Any, port);
+            server = new TcpListener(IPAddress.Any, dataServerPort);
             // Zacznij nasłuchiwać połączeń przychodzących.
             server.Start();
 
@@ -176,7 +187,7 @@ namespace DataServer
                             //przygotowujemy lokalziację oraz wpis w bazie 
                             fileTransferManager.CreateFile(fileDetails);
 
-                            byte[] msg = Encoding.ASCII.GetBytes("YourPath " + fileTransferManager.CreateFileRespon(fileDetails) + " " + FTP_username + " " + FTP_password);
+                            byte[] msg = Encoding.ASCII.GetBytes("YourPath " + fileTransferManager.CreateFileRespon(fileDetails) + " " + ftpUsername + " " + ftpPassword);
 
                             stream.Write(msg, 0, msg.Length);
                             Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID: " + parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
@@ -216,7 +227,7 @@ namespace DataServer
                     {
                         if (fileTransferManager.IsFileExist(parts[3], int.Parse(parts[2]), fileDetails))
                         {
-                            byte[] msg = Encoding.ASCII.GetBytes("YourPathToDownload " + fileTransferManager.CreateFileRespon(fileDetails) + " " + FTP_username + " " + FTP_password);
+                            byte[] msg = Encoding.ASCII.GetBytes("YourPathToDownload " + fileTransferManager.CreateFileRespon(fileDetails) + " " + ftpUsername + " " + ftpPassword);
 
                             stream.Write(msg, 0, msg.Length);
 

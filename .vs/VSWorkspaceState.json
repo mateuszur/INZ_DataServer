@@ -1,10 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\DataSerwer",
     "\\DataSerwer\\FileTransfer",
     "\\DataSerwer\\SessionManager",
-    "\\Server\\AppWindows"
+    "\\Server",
+    "\\Server\\AppWindows",
+    "\\Server\\Configurations"
   ],
-  "SelectedNode": "\\Server",
+  "SelectedNode": "\\DataSerwer\\Socket_For_Data_Transmission.cs",
   "PreviewInSolutionExplorer": false
 }
