@@ -346,6 +346,7 @@ namespace DataServer
                         }
 
                     }
+
                     if (responseData.StartsWith("List"))
                     {
                         FileTransferManager fileTransferManager = new FileTransferManager();
@@ -385,6 +386,7 @@ namespace DataServer
 
                     }
                     //Weryfiakcja sesji
+
                     if (responseData.StartsWith("IsSessionValid"))
                     {
                         Console.WriteLine(" Otrzymano prośbę o  weryfiakcję ważnosci sesji klienta...");
@@ -414,7 +416,9 @@ namespace DataServer
 
                         }
                     }
+
                     //Zatrzymanie serwera
+                    
                     if (responseData.StartsWith("STOP") && remoteEndPoint.Address.Equals(IPAddress.Loopback))
                     {
                         Console.WriteLine("Zamykanie serwera...");

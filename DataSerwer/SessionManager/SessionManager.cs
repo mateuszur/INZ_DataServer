@@ -183,8 +183,9 @@ namespace DataSerwer.SessionManager
             }
         }
 
-        ///werwyfiakcaja ważności seseji po zapytaniu klienta
-        ///
+      
+
+
         public bool IsSessionValid(string sessionID, string userID)
         {
             if (IsSessionValidWorker(sessionID, userID))
@@ -193,14 +194,12 @@ namespace DataSerwer.SessionManager
             }
             return false;
         }
-
-
         private bool IsSessionValidWorker(string sessionID, string userID)
         {
             try
             {
-                
-                string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like @sessionID AND User_ID = @userID And Active= 1";
+                string query = "SELECT COUNT(ID) FROM `View_Session` WHERE ID like" +
+                    " @sessionID AND User_ID = @userID And Active= 1";
                 string data = "";
                 MySqlCommand command = new MySqlCommand(query, connection_name);
 
@@ -209,15 +208,10 @@ namespace DataSerwer.SessionManager
 
                 connection_name.Open();
                 MySqlDataReader data_from_query = command.ExecuteReader();
-
-
-
                 while (data_from_query.Read())
                 {
                     data = data_from_query[0].ToString();
                 }
-
-
                 if (data == "1")
                 {
                     connection_name.Close();
@@ -228,15 +222,14 @@ namespace DataSerwer.SessionManager
                     connection_name.Close();
                     return false;
                 }
-
             }
             catch (Exception ex)
             {
                 connection_name.Close();
-                Console.WriteLine("Wystąpił błąd podczas weryfiakcji sesji: " + ex.ToString());
+                Console.WriteLine("Wystąpił błąd podczas weryfiakcji sesji: " +
+                    ex.ToString());
                 return false;
             }
-
 
         }
 
