@@ -37,11 +37,10 @@ namespace DataSerwer.SessionManager
         }
 
 
-        //obsługa procesu tworzenia sesej w DB
+        //Bbsługa procesu tworzenia sesej w DB
         public bool IsSessionCreated(DateTime dateTime)
         {
             sessionDetails.DataTimeStart = dateTime;
-
             if (IsSessionCreatedWorker())
             {
                 return true;
@@ -51,46 +50,31 @@ namespace DataSerwer.SessionManager
                 return false;
             }
         }
-
         private bool IsSessionCreatedWorker()
         {
             string tempSesionID;
             connection_name.ConnectionString = connection_string;
-
             try
             {
                 {
-                    //zapytanie do bazy
-                    string query = "INSERT INTO `Sesion` (`ID`, `User_ID`, `Start_sesion_Date`, `End_Sesion_Date`, `Source_Divice`, `Source_IP_Adress`, `Active`) VALUES (@SessionID, @userID, @startDate, @endDate, 'nd', '0.0.0.0', '1')";
-
-
-
+                    string query = "INSERT INTO `Sesion` (`ID`, `User_ID`, `Start_sesion_Date`, `End_Sesion_Date`, `Source_Divice`," +
+                        " `Source_IP_Adress`, `Active`) VALUES (@SessionID, @userID, @startDate, @endDate, 'nd', '0.0.0.0', '1')";
                     sessionDetails.DataTimeEnd = sessionDetails.DataTimeStart.AddHours(24);
-
                     tempSesionID = userDetails.Login + sessionDetails.DataTimeStart.ToString();
-
                     using (SHA1 sha1 = SHA1.Create())
                     {
                         byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(tempSesionID));
                         tempSesionID = BitConverter.ToString(hash).Replace("-", "").ToLower();
                     }
-
                     sessionDetails.SessionID = tempSesionID;
-
-
-
                     MySqlCommand command = new MySqlCommand(query, connection_name);
                     command.Parameters.AddWithValue("@SessionID", sessionDetails.SessionID);
                     command.Parameters.AddWithValue("@userID", userDetails.ID);
                     command.Parameters.AddWithValue("@startDate", sessionDetails.DataTimeStart);
                     command.Parameters.AddWithValue("@endDate", sessionDetails.DataTimeEnd);
-
-
-                    //Połączenie do bazy
+                    
                     connection_name.Open();
-
                     command.ExecuteNonQuery();
-
                     connection_name.Close();
                     return true;
                 }
@@ -101,7 +85,6 @@ namespace DataSerwer.SessionManager
                 connection_name.Close();
                 return false;
             }
-
         }
         // // /// /////////////////////////////////
 
