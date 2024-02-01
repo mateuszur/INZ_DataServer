@@ -263,14 +263,15 @@ namespace DataServer
                         {
                             if (fileTransferManager.IsFileExist(parts[3], int.Parse(parts[2]), fileDetails))
                             {
-                                string plaintext = "YourPathToDownload " + fileTransferManager.CreateFileRespon(fileDetails) + " " + ftpUsername + " " + ftpPassword;
+                                string plaintext = "YourPathToDownload " + fileTransferManager.CreateFileRespon(fileDetails) + 
+                                    " " + ftpUsername + " " + ftpPassword;
                                 string encryptedMessage = Convert.ToBase64String(EncryptStringToBytes_Aes(plaintext, key, iv));
                                 byte[] msg = Encoding.ASCII.GetBytes(encryptedMessage);
-                                
 
                                 stream.Write(msg, 0, msg.Length);
 
-                                Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID: " + parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
+                                Console.WriteLine(" " + DateTime.Now + " Przesłano ścieżkę do pliku dla użytkownika od ID: " + 
+                                    parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
                                 client.Close();
                             }
                             else
