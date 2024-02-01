@@ -11,11 +11,11 @@ namespace DataServerGUI.Configurations
 {
     public class ReadWriteConfig
     {
-        public void ReadConfiguration()
+        public void ReadConfiguration(Config config)
         {
             try
             {
-                var config = new Config();
+                
                 var configLines = File.ReadAllLines("..\\Config\\ServerConfig.txt");
                 foreach (var line in configLines)
                 {
@@ -36,12 +36,7 @@ namespace DataServerGUI.Configurations
                             case "FTPPassword":
                                 config.FTPPassword = keyValue[1];
                                 break;
-                            case "CertificatePublicKey":
-                                config.CertificatePublicKey = keyValue[1];
-                                break;
-                            case "CertificatePrivateKey":
-                                config.CertificatePrivateKey = keyValue[1];
-                                break;
+                            
                             case "FilePath":
                                 config.FilePath = keyValue[1];
                                 break;
@@ -64,9 +59,26 @@ namespace DataServerGUI.Configurations
                     sw.WriteLine($"FTPServerPort={config.FTPServerPort}");
                     sw.WriteLine($"FTPUsername ={config.FTPUsername}");
                     sw.WriteLine($"FTPPassword= {config.FTPPassword}");
-                    sw.WriteLine($"CertificatePublicKey={config.CertificatePublicKey}");
-                    sw.WriteLine($"CertificatePrivateKey={config.CertificatePrivateKey}");
+                    
                     sw.WriteLine($"FilePath={config.FilePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd podczas zapisu pliku konfiguracyjnego!");
+            }
+        }
+
+        public void WriteConfigurationClient(ClientConfig config)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter("..\\Config\\config.txt"))
+                {
+                    sw.WriteLine($"ServerAddress={config.ServerAddress}");
+                    sw.WriteLine($"DataServerPort={config.DataServerPort}");
+                   
+                    sw.WriteLine($"PublicKey ={config.PublicKey}");
                 }
             }
             catch (Exception ex)

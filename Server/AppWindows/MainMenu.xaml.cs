@@ -8,6 +8,8 @@ using DataServerGUI.Configurations;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Xml.Linq;
+using System.Diagnostics;
+using System.IO;
 
 namespace Server
 {
@@ -17,13 +19,16 @@ namespace Server
 
         private int user_privilege;
         private string username;
+        private string serverAddress="";
         private string dbAddress = "";
-        private string usernameFTP="";
-        private string passwordFTP="";
+        private string usernameFTP = "";
+        private string passwordFTP = "";
         private string portFTP = "";
         private string inpuCert = "";
         private string passwordCert;
         private string inputPath = "";
+
+        private string pemFileContent = "";
 
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
@@ -140,7 +145,7 @@ namespace Server
                     CertificatePath.TextWrapping = TextWrapping.WrapWithOverflow;
                     CertificatePath.Text = inpuCert;
                 }
-            }catch (Exception ex)
+            } catch (Exception ex)
             {
                 MessageBox.Show("Probem z dostępem do plików!.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -155,7 +160,7 @@ namespace Server
                 {
                     CheckFileExists = false,
                     CheckPathExists = true,
-                    FileName="Pliki DataSerwer",
+                    FileName = "Pliki DataSerwer",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                     ValidateNames = false
                 };
@@ -171,7 +176,7 @@ namespace Server
 
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Probem z dostępem do plików!.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -182,13 +187,21 @@ namespace Server
         {
             try
             {
+                serverAddress = ServerAddress.Text;
                 dbAddress = DBAddress.Text;
                 usernameFTP = FTPUsername.Text;
                 passwordFTP = FTPPassword.Password;
                 portFTP = SFTPPort.Text;
                 passwordCert = CertificatePass.Password;
 
-                if (DataBaseAddressValidation(dbAddress) == "")
+                if (AddressValidation(serverAddress) == "")
+                {
+                    ServerAddress.BorderBrush = Brushes.Red; ServerAddress.Focus();
+                    return;
+
+                }
+
+                if (AddressValidation(dbAddress) == "")
                 {
                     DBAddress.BorderBrush = Brushes.Red; DBAddress.Focus();
                     return;
@@ -214,7 +227,7 @@ namespace Server
                 if (string.IsNullOrEmpty(passwordCert))
                 {
                     CertificatePass.BorderBrush = Brushes.Red; CertificatePass.Focus();
-                    
+
                     return;
                 }
 
@@ -243,18 +256,39 @@ namespace Server
                 ReadWriteConfig readWriteConfig = new ReadWriteConfig();
                 ReadPFX readPFX = new ReadPFX();
 
-                readPFX.CertificateReader(inpuCert, passwordCert, config);
-               // readWriteConfig.WriteConfiguration(config);
-            }catch (Exception ex)
+                readPFX.CertificateReader2(inpuCert, passwordCert);
+
+                using (StreamReader reader = new StreamReader("..\\Config\\klucz_publiczny.pem"))
+                {
+                    // Odczytaj plik jako tekst
+                  pemFileContent = reader.ReadToEnd();
+
+               
+                }
+
+                ClientConfig clientConfig = new ClientConfig
+                {
+                    ServerAddress = serverAddress,
+                    PublicKey =pemFileContent,
+                };
+                
+                
+             
+              
+                readWriteConfig.WriteConfiguration(config);
+                readWriteConfig.WriteConfigurationClient(clientConfig);
+
+
+            } catch (Exception ex)
             {
                 MessageBox.Show("Błąd zapisu konfiguracji", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
 
-        private string DataBaseAddressValidation(string DBAddress)
+        private string AddressValidation(string DBAddress)
         {
-            var pattern= @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+            var pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
             if (!string.IsNullOrWhiteSpace(DBAddress))
             {
@@ -282,7 +316,7 @@ namespace Server
 
             if (!string.IsNullOrWhiteSpace(SFTPPort))
             {
-                if (!Regex.IsMatch(SFTPPort, pattern) )
+                if (!Regex.IsMatch(SFTPPort, pattern))
                 {
                     MessageBox.Show("Obsługiwany wyłącznie numery portów", "Błąd danych", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "";
@@ -301,6 +335,27 @@ namespace Server
             }
         }
 
+
+        private void Start_Server_Button(object sender, EventArgs e)
+        {
+            try
+            {
+
+                Process.Start("..\\DataSerwer\\DataSerwer.exe");
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Podczas uruchomienia serwera obsługującego klientów wystąpił błąd!", "Błąd startu serwera!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+                
+            }
+        }
+
+        private void Stop_Server_Button(object sender, EventArgs e)
+        {
+
+        }
 
 
     }

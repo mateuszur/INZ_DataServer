@@ -1,9 +1,8 @@
 ﻿using DataServerGUI.Configurations;
-using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
-using Server;
 using System;
 using System.Windows;
+using Server;
 
 namespace DataServerGUI.AppWindows
 {
