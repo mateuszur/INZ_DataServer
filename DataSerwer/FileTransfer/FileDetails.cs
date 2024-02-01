@@ -11,7 +11,7 @@ namespace DataSerwer.FileTransfer
 
         public string FileID { get; set; }
         public string FileName { get; set; }
-        public int FileSize { get; set; }
+        public double FileSize { get; set; }
         public string FileType { get; set; }
 
         public int userID { get; set; }

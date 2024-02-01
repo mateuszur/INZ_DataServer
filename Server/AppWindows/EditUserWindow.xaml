@@ -48,7 +48,7 @@
             <ComboBoxItem>Administrator systemu</ComboBoxItem>
         </ComboBox>
 
-        <Label Content="Dostęne miejsce na pliki" Grid.Row="8" Grid.Column="0"/>
+        <Label Content="Dostęne miejsce na pliki (GB)" Grid.Row="8" Grid.Column="0"/>
         <TextBox x:Name="Space_available" Grid.Row="8" Grid.Column="1" IsReadOnly="True"/>
 
 

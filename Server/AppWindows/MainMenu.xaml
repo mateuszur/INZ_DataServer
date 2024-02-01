@@ -150,7 +150,7 @@
                         <DataGridTextColumn Binding="{Binding Privileges}" Header="Uprawnienia" Width="*"  />
                         <DataGridTextColumn Binding="{Binding Name}" Header="Imię" Width="*"  />
                         <DataGridTextColumn Binding="{Binding Surname}" Header="Nazwisko" Width="*"  />
-                        <DataGridTextColumn Binding="{Binding Space_available}" Header="Dostępne miejsce" Width="SizeToHeader" />
+                        <DataGridTextColumn Binding="{Binding Space_available}" Header="Dostępne miejsce (GB)" Width="SizeToHeader" />
                         <DataGridTextColumn Binding="{Binding Disk_space_used}" Header="Użyte miejsce"  Width="SizeToHeader" />
 
                     </DataGrid.Columns>

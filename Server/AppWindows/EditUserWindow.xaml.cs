@@ -24,8 +24,8 @@ namespace DataServerGUI.AppWindows
 
         string name;
         string surname;
-        string password="";
-        string password2="";
+        string password = "";
+        string password2 = "";
         int privilege;
         string salt;
         string space_for_file;
@@ -99,14 +99,15 @@ namespace DataServerGUI.AppWindows
                             privilege = int.Parse(data_from_querry1[0].ToString());
                             NameTextBox.Text = (data_from_querry1[1]).ToString();
                             SurnameTextBox.Text = (data_from_querry1[2]).ToString();
-                            Space_available.Text= (data_from_querry1[3].ToString());
+                            Space_available.Text = (Math.Round(data_from_querry1.GetDouble(3) / 1024, 2)).ToString();
 
                         }
                         connection_name.Close();
                         NameTextBox.IsReadOnly = false;
-                        SurnameTextBox.IsReadOnly=false;
+                        SurnameTextBox.IsReadOnly = false;
                         radioButtonPasswor.IsEnabled = true;
                         PrivilegesComboBox.IsEnabled = true;
+                        Space_available.IsEnabled = true;
 
                     }
                 }
@@ -126,7 +127,7 @@ namespace DataServerGUI.AppWindows
 
                 name = NameTextBox.Text;
                 surname = SurnameTextBox.Text;
-              
+
                 password = Password1.Password;
                 password2 = Password2.Password;
                 space_for_file = Space_available.Text;
@@ -157,7 +158,7 @@ namespace DataServerGUI.AppWindows
                         return;
                     }
                 }
-                
+
 
 
                 if (PrivilegesComboBox.SelectedItem != null)
@@ -209,7 +210,7 @@ namespace DataServerGUI.AppWindows
                 MessageBox.Show("Podczas przetwarzania formularza wystąpił błąd!", "Błąd danych!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-           
+
         }
 
 
@@ -218,23 +219,23 @@ namespace DataServerGUI.AppWindows
             try
             {
                 connection_name.Open();
-               
+
                 string sql =
                 "UPDATE `Users` SET `Password` = @password, `Salt` = @salt, `Privileges` = @privileges, `Name` = @name, `Surname` = @surname, `Space_available` = @space_available WHERE `Users`.`ID` = @userID;";
-                string sql2= "UPDATE `Users` SET `Privileges` = @privileges, `Name` = @name, `Surname` = @surname, `Space_available` = @space_available WHERE `Users`.`ID` = @userID;";
-                MySqlCommand command; 
+                string sql2 = "UPDATE `Users` SET `Privileges` = @privileges, `Name` = @name, `Surname` = @surname, `Space_available` = @space_available WHERE `Users`.`ID` = @userID;";
+                MySqlCommand command;
                 if (radioButtonChecked)
                 {
                     command = new MySqlCommand(sql, connection_name);
 
                     command.Parameters.AddWithValue("@password", PasswordSalting(password, salt));
                     command.Parameters.AddWithValue("@salt", salt);
-                 
+
 
                 }
                 else
                 {
-                    command= new MySqlCommand(sql2,connection_name);
+                    command = new MySqlCommand(sql2, connection_name);
 
                 }
                 command.Parameters.AddWithValue("@privileges", privilege);
@@ -376,7 +377,7 @@ namespace DataServerGUI.AppWindows
         public void Password_Change_RadioButton(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = (RadioButton)sender;
-            if(radioButton.IsChecked == true)
+            if (radioButton.IsChecked == true)
             {
                 radioButtonChecked = true;
                 Password1.IsEnabled = true;

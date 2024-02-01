@@ -14,8 +14,8 @@ namespace Server
         public string Privileges { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Space_available { get; set; }
+        public double Space_available { get; set; }
 
-        public string Disk_space_used { get; set; } = "0";
+        public double Disk_space_used { get; set; }
     }
 }

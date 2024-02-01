@@ -178,7 +178,7 @@ namespace DataServer
                         fileDetails.userID = int.Parse(parts[2]);
                         fileDetails.FileName = parts[3];
                         fileDetails.FileType = parts[4];
-                        fileDetails.FileSize = int.Parse(parts[5]);
+                        fileDetails.FileSize = double.Parse(parts[5]);
                         fileDetails.DateOfTransfer = DateTime.Now;
                         fileDetails.SourceIPAddress = clientIpAddress.ToString();
 

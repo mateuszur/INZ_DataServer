@@ -16,10 +16,10 @@ namespace Server
 
     public partial class MainMenu : Window
     {
-
+        private int test;
         private int user_privilege;
         private string username;
-        private string serverAddress="";
+        private string serverAddress = "";
         private string dbAddress = "";
         private string usernameFTP = "";
         private string passwordFTP = "";
@@ -78,14 +78,14 @@ namespace Server
 
                         Entry_Users feld = new Entry_Users
                         {
-                            ID = int.Parse(data_from_querry.GetString(0)),
+                            ID = data_from_querry.GetInt32(0),
                             Login = data_from_querry.GetString(1),
-                            Privileges = data_from_querry.GetString(2),
+                            Privileges = data_from_querry.GetInt32(2).ToString(),
                             Name = data_from_querry.GetString(3),
                             Surname = data_from_querry.GetString(4),
-                            Space_available = data_from_querry.GetString(5) ?? "0",
-                            Disk_space_used = data_from_querry.GetString(6) ?? "0",
+                            Space_available = Math.Round(data_from_querry.GetDouble(5) / 1024, 2),
 
+                            Disk_space_used = Math.Round(data_from_querry.GetDouble(6) / 1024, 2)
                         };
 
 
@@ -102,7 +102,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                connection_name.Close();
+                connection_name?.Close();
                 MessageBox.Show("Otwieranie zarządzania użytkownikami... \n" + ex);
             }
 
@@ -145,7 +145,8 @@ namespace Server
                     CertificatePath.TextWrapping = TextWrapping.WrapWithOverflow;
                     CertificatePath.Text = inpuCert;
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Probem z dostępem do plików!.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -261,25 +262,26 @@ namespace Server
                 using (StreamReader reader = new StreamReader("..\\Config\\klucz_publiczny.pem"))
                 {
                     // Odczytaj plik jako tekst
-                  pemFileContent = reader.ReadToEnd();
+                    pemFileContent = reader.ReadToEnd();
 
-               
+
                 }
 
                 ClientConfig clientConfig = new ClientConfig
                 {
                     ServerAddress = serverAddress,
-                    PublicKey =pemFileContent,
+                    PublicKey = pemFileContent,
                 };
-                
-                
-             
-              
+
+
+
+
                 readWriteConfig.WriteConfiguration(config);
                 readWriteConfig.WriteConfigurationClient(clientConfig);
 
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Błąd zapisu konfiguracji", "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -344,11 +346,11 @@ namespace Server
                 Process.Start("..\\DataSerwer\\DataSerwer.exe");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Podczas uruchomienia serwera obsługującego klientów wystąpił błąd!", "Błąd startu serwera!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-                
+
             }
         }
 

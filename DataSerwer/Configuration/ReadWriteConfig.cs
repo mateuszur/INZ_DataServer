@@ -13,7 +13,7 @@ namespace DataSerwer.Configuration
         {
             try
             {
-         
+
                 var configLines = File.ReadAllLines("..\\Config\\ServerConfig.txt");
                 foreach (var line in configLines)
                 {
@@ -34,8 +34,8 @@ namespace DataSerwer.Configuration
                             case "FTPPassword":
                                 config.FTPPassword = keyValue[1];
                                 break;
-                           
-                               
+
+
                             case "FilePath":
                                 config.FilePath = keyValue[1];
                                 break;
@@ -57,9 +57,9 @@ namespace DataSerwer.Configuration
                 {
                     sw.WriteLine($"DataServerPort={config.DataServerPort}");
                     sw.WriteLine($"FTPServerPort={config.FTPServerPort}");
-                    sw.WriteLine($"FTPUsername ={config.FTPUsername}");
-                    sw.WriteLine($"FTPPassword= {config.FTPPassword}");
-               
+                    sw.WriteLine($"FTPUsername={config.FTPUsername}");
+                    sw.WriteLine($"FTPPassword={config.FTPPassword}");
+
                     sw.WriteLine($"FilePath={config.FilePath}");
                 }
             }

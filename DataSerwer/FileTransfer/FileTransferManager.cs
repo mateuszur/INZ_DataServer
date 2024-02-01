@@ -112,11 +112,11 @@ namespace DataSerwer.FileTransfer
         {
             try
             {
-             
+
 
                 string querry = "SELECT Disk_space_used, Space_available FROM `View_Disk_space_used_by_Users` WHERE ID= @userID;";
-                int Disk_space_used = 0;
-                int Space_available = 0;
+                double Disk_space_used = 0;
+                double Space_available = 0;
 
                 MySqlCommand command = new MySqlCommand(querry, connection_name);
 
@@ -127,8 +127,8 @@ namespace DataSerwer.FileTransfer
 
                 while (data_from_querry.Read())
                 {
-                    Disk_space_used = data_from_querry.GetInt32(0);
-                    Space_available = data_from_querry.GetInt32(1);
+                    Disk_space_used = Math.Round(data_from_querry.GetDouble(0) / 1024, 2);
+                    Space_available = Math.Round(data_from_querry.GetDouble(1) / 1024, 2);
                 }
                 connection_name.Close();
 
@@ -327,7 +327,14 @@ namespace DataSerwer.FileTransfer
                 return true;
 
             }
-            else { return false; }
+            else
+            {
+
+                DeleteFileOnServer(userID, fileDetails);
+                DeleteFileInDB(fileName, userID, fileDetails);
+
+                return false;
+            }
 
         }
 
@@ -337,8 +344,8 @@ namespace DataSerwer.FileTransfer
             int result = 0;
             try
             {
-                string querry = "SELECT COUNT(ID) FROM `Vive_Files_Donwload` WHERE File_name LIKE @fileName  AND User_ID= @userID;";
-                string querry2 = "SELECT * FROM `Vive_Files_Donwload` WHERE File_name LIKE @fileName2  AND User_ID= @userID2;";
+                string querry = "SELECT COUNT(ID) FROM `View_Files_Donwload` WHERE File_name LIKE @fileName  AND User_ID= @userID;";
+                string querry2 = "SELECT * FROM `View_Files_Donwload` WHERE File_name LIKE @fileName2  AND User_ID= @userID2;";
 
                 MySqlCommand command = new MySqlCommand(querry, connection_name);
                 command.Parameters.AddWithValue("@fileName", fileName);
@@ -397,7 +404,7 @@ namespace DataSerwer.FileTransfer
 
         private bool IsFileExistOnServer(int userID, FileDetails fileDetails)
         {
-            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID +  fileDetails.FileType;
+            string userFilePath = filePath + "User" + userID + "\\" + fileDetails.FileID +  fileDetails.FileType;
             try
             {
                 if (File.Exists(userFilePath))
@@ -420,7 +427,7 @@ namespace DataSerwer.FileTransfer
         private void DeleteFileOnServer(int userID, FileDetails fileDetails)
         {
 
-            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID + "." + fileDetails.FileType;
+            string userFilePath = filePath + "User" + userID + "\\" + fileDetails.FileID + "." + fileDetails.FileType;
 
             try
             {

@@ -57,8 +57,8 @@ namespace DataServerGUI.Configurations
                 {
                     sw.WriteLine($"DataServerPort={config.DataServerPort}");
                     sw.WriteLine($"FTPServerPort={config.FTPServerPort}");
-                    sw.WriteLine($"FTPUsername ={config.FTPUsername}");
-                    sw.WriteLine($"FTPPassword= {config.FTPPassword}");
+                    sw.WriteLine($"FTPUsernam={config.FTPUsername}");
+                    sw.WriteLine($"FTPPassword={config.FTPPassword}");
                     
                     sw.WriteLine($"FilePath={config.FilePath}");
                 }
