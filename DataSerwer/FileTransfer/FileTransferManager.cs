@@ -155,11 +155,11 @@ namespace DataSerwer.FileTransfer
 
 
         // obsługa tworzenie pliku oraz przygotowanie odp dla klienta
+
         public void CreateFile(FileDetails fileDetails)
         {
             CreateFileWorker(fileDetails);
         }
-
         private void CreateFileWorker(FileDetails fileDetails)
         {
             try
@@ -167,7 +167,9 @@ namespace DataSerwer.FileTransfer
                 connection_name.ConnectionString = connection_string;
                 CreateFileID(fileDetails);
 
-                string querry = "INSERT INTO `File_Table` (`ID`, `User_ID`, `File_name`, `File_Size`, `File_type` , `Date_of_Transfer`, `Source_IP_Adress`) VALUES(@fileID, @userID, @fileName, @fileSize, @fileType, @dateTransfer, @sourceIP)";
+                string querry = "INSERT INTO `File_Table` (`ID`, `User_ID`, `File_name`, " +
+                    "`File_Size`, `File_type` , `Date_of_Transfer`, `Source_IP_Adress`) VALUES(@fileID," +
+                    " @userID, @fileName, @fileSize, @fileType, @dateTransfer, @sourceIP)";
                 MySqlCommand command = new MySqlCommand(querry, connection_name);
 
                 command.Parameters.AddWithValue("@fileID", fileDetails.FileID);
@@ -177,7 +179,6 @@ namespace DataSerwer.FileTransfer
                 command.Parameters.AddWithValue("@fileType", fileDetails.FileType);
                 command.Parameters.AddWithValue("@dateTransfer", fileDetails.DateOfTransfer);
                 command.Parameters.AddWithValue("@sourceIP", fileDetails.SourceIPAddress);
-
 
                 connection_name.Open();
                 command.ExecuteNonQuery();
@@ -237,14 +238,13 @@ namespace DataSerwer.FileTransfer
         }
 
 
-        //user/User+ID/fileName
+     
         public string CreateFileRespon(FileDetails fileDetails)
         {
             try
             {
                 string responString = "/user/User" + fileDetails.userID + "/" + fileDetails.FileID + fileDetails.FileType;
                 return responString;
-
             }
             catch (Exception ex)
             {
