@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 
 namespace Server
 {
@@ -157,18 +159,14 @@ namespace Server
         {
             try
             {
-                OpenFileDialog dialog = new OpenFileDialog
+                var dialog = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog
                 {
-                    CheckFileExists = false,
-                    CheckPathExists = true,
-                    FileName = "Pliki DataSerwer",
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    ValidateNames = false
+                    InitialDirectory = "c:\\Download",
+                    IsFolderPicker = true
                 };
 
-                bool? result = dialog.ShowDialog();
-                if (result == true)
-                {
+                if(dialog.ShowDialog() == CommonFileDialogResult.Ok)
+        {
                     inputPath = dialog.FileName;
 
                     UserPath.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -256,28 +254,19 @@ namespace Server
 
                 ReadWriteConfig readWriteConfig = new ReadWriteConfig();
                 ReadPFX readPFX = new ReadPFX();
-
-                readPFX.CertificateReader2(inpuCert, passwordCert);
-
-                using (StreamReader reader = new StreamReader("..\\Config\\klucz_publiczny.pem"))
-                {
-                    // Odczytaj plik jako tekst
-                    pemFileContent = reader.ReadToEnd();
-
-
-                }
-
+                readPFX.CertificateReader2(inpuCert, passwordCert, config);
+               
                 ClientConfig clientConfig = new ClientConfig
                 {
                     ServerAddress = serverAddress,
-                    PublicKey = pemFileContent,
+                    SFTPPort= int.Parse(portFTP),
+                    Key = config.Key,
+                    IV= config.IV,
                 };
-
-
-
 
                 readWriteConfig.WriteConfiguration(config);
                 readWriteConfig.WriteConfigurationClient(clientConfig);
+                MessageBox.Show("Zapisano konfigurację!", "OK!", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
             }

@@ -39,6 +39,15 @@ namespace DataSerwer.Configuration
                             case "FilePath":
                                 config.FilePath = keyValue[1];
                                 break;
+
+
+                            case "Key":
+                                config.Key = keyValue[1];
+                                break;
+
+                            case "IV":
+                                config.IV = keyValue[1];
+                                break;
                         }
                     }
                 }
@@ -59,8 +68,9 @@ namespace DataSerwer.Configuration
                     sw.WriteLine($"FTPServerPort={config.FTPServerPort}");
                     sw.WriteLine($"FTPUsername={config.FTPUsername}");
                     sw.WriteLine($"FTPPassword={config.FTPPassword}");
-
                     sw.WriteLine($"FilePath={config.FilePath}");
+                    sw.WriteLine($"Key={config.Key}");
+                    sw.WriteLine($"IV={config.IV}");
                 }
             }
             catch (Exception ex)

@@ -40,6 +40,14 @@ namespace DataServerGUI.Configurations
                             case "FilePath":
                                 config.FilePath = keyValue[1];
                                 break;
+
+                            case "Key":
+                                config.Key = keyValue[1];
+                                break;
+                            
+                            case "IV":
+                                    config.IV = keyValue[1];
+                                break;
                         }
                     }
                 }
@@ -57,10 +65,11 @@ namespace DataServerGUI.Configurations
                 {
                     sw.WriteLine($"DataServerPort={config.DataServerPort}");
                     sw.WriteLine($"FTPServerPort={config.FTPServerPort}");
-                    sw.WriteLine($"FTPUsernam={config.FTPUsername}");
+                    sw.WriteLine($"FTPUsername={config.FTPUsername}");
                     sw.WriteLine($"FTPPassword={config.FTPPassword}");
-                    
                     sw.WriteLine($"FilePath={config.FilePath}");
+                    sw.WriteLine($"Key={config.Key}");
+                    sw.WriteLine($"IV={config.IV}");
                 }
             }
             catch (Exception ex)
@@ -77,8 +86,9 @@ namespace DataServerGUI.Configurations
                 {
                     sw.WriteLine($"ServerAddress={config.ServerAddress}");
                     sw.WriteLine($"DataServerPort={config.DataServerPort}");
-                   
-                    sw.WriteLine($"PublicKey ={config.PublicKey}");
+                    sw.WriteLine($"SFTPPort={config.SFTPPort}");
+                    sw.WriteLine($"Key={config.Key}");
+                    sw.WriteLine($"IV={config.IV}");
                 }
             }
             catch (Exception ex)

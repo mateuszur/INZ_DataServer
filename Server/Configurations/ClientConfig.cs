@@ -11,12 +11,11 @@ namespace DataServerGUI.Configurations
 
         public string ServerAddress { get; set; }
         public int DataServerPort { get; set; } = 3333;
+        public int SFTPPort { get; set; }
+        public string Key { get; set; }
+        public string IV { get; set; }
        
-        
-
-        public string PublicKey { get; set; }
 
 
-        
     }
 }

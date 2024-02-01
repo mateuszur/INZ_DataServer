@@ -14,5 +14,8 @@ namespace DataSerwer.Configuration
         public string FTPPassword { get; set; }
        
         public string FilePath { get; set; }
+
+        public string Key { get; set; }
+        public string IV { get; set; }
     }
 }

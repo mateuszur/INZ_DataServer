@@ -1,0 +1,17 @@
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataSerwer\DataSerwer.exe
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataSerwer\DataSerwer.deps.json
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataSerwer\DataSerwer.runtimeconfig.json
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataSerwer\DataSerwer.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Wyjście\Debug\DataSerwer\DataSerwer.pdb
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.csproj.AssemblyReference.cache
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.AssemblyInfoInputs.cache
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.AssemblyInfo.cs
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.csproj.CoreCompileInputs.cache
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.sourcelink.json
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.csproj.CopyComplete
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\refint\DataSerwer.dll
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.pdb
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\DataSerwer.genruntimeconfig.cache
+C:\Users\matik\Source\Repos\mateuszur\INZ_Server\DataSerwer\obj\Debug\ref\DataSerwer.dll

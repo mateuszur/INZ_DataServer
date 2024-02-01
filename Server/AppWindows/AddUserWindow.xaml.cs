@@ -54,28 +54,28 @@ namespace DataServerGUI.AppWindows
             
                     if (Name_Surname_Validation(name) == "")
                     {
-                        NameTextBox.BorderBrush = Brushes.Red; NameTextBox.Focus();
+                        NameTextBox.BorderBrush = System.Windows.Media.Brushes.Red; NameTextBox.Focus();
                         return;
                     }
                   
 
                     if (Name_Surname_Validation(surname) == "")
                     {
-                        SurnameTextBox.BorderBrush = Brushes.Red; SurnameTextBox.Focus();
+                        SurnameTextBox.BorderBrush = System.Windows.Media.Brushes.Red; SurnameTextBox.Focus();
                     return;
                 }
                   
                     if (Login_Validation(login) == "")
                     {
-                        LoginTextBox.BorderBrush = Brushes.Red; LoginTextBox.Focus();
+                        LoginTextBox.BorderBrush = System.Windows.Media.Brushes.Red; LoginTextBox.Focus();
                     return;
                 }
                    
 
                     if (Password_Validation(password, password2) == "")
                     {
-                        Password1.Background = Brushes.Red; Password1.Focus();
-                        Password2.Background = Brushes.Red;
+                        Password1.Background =  System.Windows.Media.Brushes.Red; Password1.Focus();
+                        Password2.Background = System.Windows.Media.Brushes.Red;
                     return;
                 }
                   
@@ -106,7 +106,7 @@ namespace DataServerGUI.AppWindows
 
                     if (Space_For_File_Validation(space_for_file) == "")
                     {
-                        Space_available.BorderBrush = Brushes.Red; Space_available.Focus();
+                        Space_available.BorderBrush = System.Windows.Media.Brushes.Red; Space_available.Focus();
                     return;
                 }
                     

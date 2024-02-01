@@ -14,68 +14,69 @@ namespace DataServerGUI.Configurations
 {
     public class ReadPFX
     {
-        //public void CertificateReader(string pfxFilePath, string pfxPassword, Config config)
-        //{
-        //    try
+
+
+        //Zmiana pierwotnej koncepcji
+        //    public void CertificateReader2(string pfxFilePath, string pfxPassword)
         //    {
-        //        // Wczytaj certyfikat PFX
-        //        X509Certificate2 certificate = new X509Certificate2(pfxFilePath, pfxPassword, X509KeyStorageFlags.Exportable);
-        //        ReadWriteConfig configSaver = new ReadWriteConfig();
-                
-
-        //        // Wyciągnij klucz publiczny
-        //        var publicKey = certificate.PublicKey.Key.ToXmlString(false);
-        //        MessageBox.Show("Klucz publiczny: " + publicKey);
-        //        config.CertificatePublicKey = publicKey;
-        //        configSaver.WriteConfiguration(config);
-
-        //        // Wyciągnij klucz prywatny
-        //        if (certificate.HasPrivateKey)
-        //        {
-        //            //    RSA rsa = RSA.Create();
-        //            //    rsa = certificate.GetRSAPrivateKey();
-        //            //    string privateKey = rsa.ExportRSAPrivateKey().ToString();
-        //            //var privateKey = certificate.GetRSAPrivateKey().ToString();
-        //            //var privateKey = certificate.PrivateKey;
-        //            //
-        //            //MessageBox.Show("Klucz prywatny: " + privateKey);
-        //            //
-        //            var rsaPrivateKey = certificate.GetRSAPrivateKey();
-
-        //            var rsaParameters = rsaPrivateKey.ExportParameters(true);
-        //            var bcPrivateKeyParameters = new RsaPrivateCrtKeyParameters(
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.Modulus),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.Exponent),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.D),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.P),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.Q),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.DP),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.DQ),
-        //                new Org.BouncyCastle.Math.BigInteger(1, rsaParameters.InverseQ));
-
-        //            // Eksportuj klucz prywatny do formatu PEM
-        //            using var stringWriter = new StringWriter();
-        //            var pemWriter = new PemWriter(stringWriter);
-        //            pemWriter.WriteObject(bcPrivateKeyParameters);
-                   
-        //            config.CertificatePrivateKey = stringWriter.ToString();
-        //            configSaver.WriteConfiguration(config);
+        //        try
+        //        {// Wczytaj certyfikat PFX
+        //            X509Certificate2 certificate = new X509Certificate2(pfxFilePath, pfxPassword, X509KeyStorageFlags.Exportable);
 
 
+        //            // Wyciągnij klucz publiczny
+        //            var publicKey = certificate.GetRSAPublicKey();
+        //            if (publicKey == null)
+        //            {
+        //                MessageBox.Show("Brak klucza publicznego! ");
+        //            }
+        //            else
+        //            {
+
+
+        //                using (TextWriter textWriter = new StreamWriter("..\\Config\\klucz_publiczny.pem"))
+        //                {
+        //                    // Utwórz obiekt PemWriter
+        //                    PemWriter pemWriter = new PemWriter(textWriter);
+
+        //                    // Konwertuj klucz publiczny na obiekt Bouncy Castle
+        //                    AsymmetricKeyParameter publicKeyParameter = DotNetUtilities.GetRsaPublicKey((RSA)publicKey);
+
+        //                    // Zapisz klucz publiczny do pliku PEM
+        //                    pemWriter.WriteObject(publicKeyParameter);
+        //                }
+        //            }
+
+
+
+        //            if (certificate.HasPrivateKey)
+        //            {
+        //                // Wyodrębnij klucz prywatny
+        //                AsymmetricAlgorithm privateKey = certificate.GetRSAPrivateKey();
+        //                // Utwórz obiekt TextWriter do zapisu klucza prywatnego do pliku
+        //                using (TextWriter textWriter = new StreamWriter("..\\Config\\klucz_prywatny.pem"))
+        //                {
+        //                    // Utwórz obiekt PemWriter
+        //                    PemWriter pemWriter = new PemWriter(textWriter);
+        //                    // Konwertuj klucz prywatny na obiekt Bouncy Castle
+        //                    AsymmetricCipherKeyPair keyPair = DotNetUtilities.GetRsaKeyPair((RSA)privateKey);
+        //                    // Zapisz klucz prywatny do pliku PEM
+        //                    pemWriter.WriteObject(keyPair.Private);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Ten certyfikat nie zawiera klucza prywatnego.");
+        //            }
         //        }
-        //        else
+        //        catch (Exception ex)
         //        {
-        //            MessageBox.Show("Ten certyfikat nie zawiera klucza prywatnego.");
+        //            MessageBox.Show("Błąd odczytu certyfiaktu! \n" + ex.ToString());
         //        }
         //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Błąd odczytu certyfiaktu! \n"+ex.ToString());
-        //    }
-        //}
 
 
-        public void CertificateReader2(string pfxFilePath, string pfxPassword)
+        public void CertificateReader2(string pfxFilePath, string pfxPassword, Config config)
         {
             try
             {// Wczytaj certyfikat PFX
@@ -83,52 +84,28 @@ namespace DataServerGUI.Configurations
 
 
                 // Wyciągnij klucz publiczny
-                var publicKey = certificate.GetRSAPublicKey();
+                byte[] publicKey = certificate.PublicKey.EncodedKeyValue.RawData;
                 if (publicKey == null)
                 {
                     MessageBox.Show("Brak klucza publicznego! ");
                 }
                 else
                 {
-
-                  
-                    using (TextWriter textWriter = new StreamWriter("..\\Config\\klucz_publiczny.pem"))
+                    //  KDF (PBKDF2) do wygenerowania klucza AES i IV z klucza publicznego
+                    using (var rfc2898 = new Rfc2898DeriveBytes(publicKey, new byte[16], 10000))
                     {
-                        // Utwórz obiekt PemWriter
-                        PemWriter pemWriter = new PemWriter(textWriter);
+                        byte[] aesKey = rfc2898.GetBytes(32); // Generuj 256-bitowy klucz AES
+                        byte[] aesIV = rfc2898.GetBytes(16); // Generuj 128-bitowy IV
 
-                        // Konwertuj klucz publiczny na obiekt Bouncy Castle
-                        AsymmetricKeyParameter publicKeyParameter = DotNetUtilities.GetRsaPublicKey((RSA)publicKey);
+                        // Zapisz klucz AES i IV do pliku
+                        
+                        ReadWriteConfig readWriteConfig = new ReadWriteConfig();
 
-                        // Zapisz klucz publiczny do pliku PEM
-                        pemWriter.WriteObject(publicKeyParameter);
+                            config.Key = BitConverter.ToString(aesKey).Replace("-", "");
+                            config.IV = BitConverter.ToString(aesIV).Replace("-", "");
+
+                       
                     }
-                }
-                
-                
-            
-                if (certificate.HasPrivateKey)
-                {
-                    // Wyodrębnij klucz prywatny
-                    AsymmetricAlgorithm privateKey = certificate.GetRSAPrivateKey();
-
-                    // Utwórz obiekt TextWriter do zapisu klucza prywatnego do pliku
-                    using (TextWriter textWriter = new StreamWriter("..\\Config\\klucz_prywatny.pem"))
-                    {
-                        // Utwórz obiekt PemWriter
-                        PemWriter pemWriter = new PemWriter(textWriter);
-
-                        // Konwertuj klucz prywatny na obiekt Bouncy Castle
-                        AsymmetricCipherKeyPair keyPair = DotNetUtilities.GetRsaKeyPair((RSA)privateKey);
-
-                        // Zapisz klucz prywatny do pliku PEM
-                        pemWriter.WriteObject(keyPair.Private);
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("Ten certyfikat nie zawiera klucza prywatnego.");
                 }
             }
             catch (Exception ex)
@@ -137,5 +114,9 @@ namespace DataServerGUI.Configurations
             }
         }
 
+
+
+
     }
+
 }
