@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataSerwer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+031ca2d38c038ae08810107bc7deac208dec640a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bc823a104a999a20695deac78c2c7188d139986")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataSerwer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataSerwer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

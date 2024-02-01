@@ -11,10 +11,15 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Text;
+using MySqlX.XDevAPI;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 
 
 namespace Server
 {
+
 
     public partial class MainMenu : Window
     {
@@ -30,11 +35,23 @@ namespace Server
         private string passwordCert;
         private string inputPath = "";
 
-        private string pemFileContent = "";
+        // konfiguracja do zaczytania z pliku
+        private int dataServerPort = 0;
+        private string ftpServerPort = "";
+        private string ftpUsername = "";
+        private string ftpPassword = "";
+        private string filePath = "";
+
+        private byte[] key;
+        private byte[] iv;
+
+        ReadWriteConfig configReadWrite = new ReadWriteConfig();
+        Config config = new Config();
 
         ParametrFileManager fileManager = new ParametrFileManager();
         private string connection_string;
         MySqlConnection connection_name = new MySqlConnection();
+
 
 
         public MainMenu(int user_privilege, string username)
@@ -43,7 +60,14 @@ namespace Server
             connection_string = fileManager.ReadParameter();
             this.user_privilege = user_privilege;
             this.username = username;
-
+            configReadWrite.ReadConfiguration(config);
+            this.dataServerPort = config.DataServerPort;
+            this.ftpServerPort = config.FTPServerPort;
+            this.ftpUsername = config.FTPUsername;
+            this.ftpPassword = config.FTPPassword;
+            this.filePath = config.FilePath;
+            this.key = StringToByteArray(config.Key);
+            this.iv = StringToByteArray(config.IV);
         }
 
         private void Server_Setting_Button_Click(object sender, RoutedEventArgs e)
@@ -345,9 +369,63 @@ namespace Server
 
         private void Stop_Server_Button(object sender, EventArgs e)
         {
+            try
+            {
+                TcpClient client = new TcpClient("localhost", 3333);
+                NetworkStream stream = client.GetStream();
 
+                string plaintext = "STOP";
+                string encryptedMessage = Convert.ToBase64String(EncryptStringToBytes_Aes(plaintext, key, iv));
+                byte[] data = Encoding.ASCII.GetBytes(encryptedMessage);
+                stream.Write(data, 0, data.Length);
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Podczas zatrzymania serwera obsługującego klientów wystąpił błąd!", "Błąd zatrzymania serwera!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
+        private static byte[] StringToByteArray(string hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
+        }
+        private static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
+        {
+            if (plainText == null || plainText.Length <= 0)
+                throw new ArgumentNullException("plainText");
+            if (Key == null || Key.Length <= 0)
+                throw new ArgumentNullException("Key");
+            if (IV == null || IV.Length <= 0)
+                throw new ArgumentNullException("IV");
 
+            byte[] encrypted;
 
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Key;
+                aesAlg.IV = IV;
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(plainText);
+                        }
+                        encrypted = msEncrypt.ToArray();
+                    }
+                }
+            }
+
+            return encrypted;
+        }
     }
 }

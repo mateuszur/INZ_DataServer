@@ -423,11 +423,22 @@ namespace DataServer
                         }
                     }
 
+                    if (responseData.StartsWith("STOP") && remoteEndPoint.Address.Equals(IPAddress.Loopback))
+                    {
+                        Console.WriteLine("Zamykanie serwera...");
+                        client.Close();
+                        server.Stop();
+                        break;
+                    }
+
                     client.Close();
                 
             
                 }
-            }catch(Exception ex)
+                await Task.Delay(1500);
+                System.Environment.Exit(0);
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }

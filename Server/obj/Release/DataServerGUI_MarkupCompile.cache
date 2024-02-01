@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\obj\Release\
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\obj\Release\
 DataServerGUI
 none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\matik\Source\Repos\mateuszur\INZ_Server\Server\App.xaml
+C:\Users\matik\source\repos\mateuszur\INZ_Server\Server\App.xaml
 5688501694
 
-15-1878210054
-202290627664
+161784583335
+2131490306805
 AppWindows\AddUserWindow.xaml;AppWindows\DeleteUserWindow.xaml;AppWindows\EditUserWindow.xaml;AppWindows\MainMenu.xaml;LoginWindow.xaml;
 
-True
+False
 
