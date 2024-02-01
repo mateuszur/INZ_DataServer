@@ -297,6 +297,7 @@ namespace DataServer
                         }
 
                     }
+                   
                     if (responseData.StartsWith("Delete"))
                     {
                         FileTransferManager fileTransferManager = new FileTransferManager();
@@ -310,7 +311,6 @@ namespace DataServer
                         {
                             if (fileTransferManager.IsFileExist(parts[3], int.Parse(parts[2]), fileDetails))
                             {
-
                                 fileTransferManager.Delete(parts[3], int.Parse(parts[2]), fileDetails);
 
                                 string plaintext = "FileDeletedSuccessfully";
@@ -319,7 +319,8 @@ namespace DataServer
 
                                 stream.Write(msg, 0, msg.Length);
 
-                                Console.WriteLine(" " + DateTime.Now + " Usuniętop plik użytkownika o ID: " + parts[2] + " Źródłowy adres IP: " + clientIpAddress.ToString());
+                                Console.WriteLine(" " + DateTime.Now + " Usuniętop plik użytkownika o ID: " + parts[2] + 
+                                    " Źródłowy adres IP: " + clientIpAddress.ToString());
                                 client.Close();
                             }
                             else
