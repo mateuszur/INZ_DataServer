@@ -73,40 +73,33 @@ namespace DataServer
             try
             {
                 //Utworzenie obiektu timer na potrzeby sprawdzania stanu sesji w bazie
-
                 aTimer = new System.Timers.Timer(120000);
-                // Dodaj zdarzenie Elapsed do timera
                 aTimer.Elapsed += OnTimedEvent;
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
-                // Utwórz obiekt TcpListener.
+                //Utworzenie obiektu TcpListener.
                 server = new TcpListener(IPAddress.Any, dataServerPort);
-                // Zacznij nasłuchiwać połączeń przychodzących.
+                // Start serwera
                 server.Start();
-
                 Console.WriteLine("Serwer jest uruchomiony. Oczekiwanie na połączenia...");
                 while (true)
                 {
-                    // Akceptuj połączenie od klienta.
+                    //Akceptacja połączenia od klienta.
                     TcpClient client = server.AcceptTcpClient();
-                    //pobranie adresu IP klienta
+                    //Pobranie adresu IP klienta
                     IPEndPoint remoteEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
-                    // Pobierz obiekt NetworkStream.
+                    //Utworzenie, odebranie oraz rozszyfrownie danych z  obieku NetworkStream.
                     NetworkStream stream = client.GetStream();
                     byte[] data = new byte[256];
                     int bytes = stream.Read(data, 0, data.Length);
                     string responseData = Encoding.ASCII.GetString(data, 0, bytes);
-
                     responseData = DecryptStringFromBytes_Aes(Convert.FromBase64String(responseData), key, iv);
-
+                    //Ukrycie danych logownia oraz polecenia Ping w konsoli
                     if (responseData != "Ping" || !responseData.StartsWith("Login"))
                     {
                         Console.WriteLine("Odebrano: {0}", responseData);
                     }
-
-
-                   // Odpowiedź dotycząca stanu serwera
-
+                    // Odpowiedź dotycząca stanu serwera
                     if (responseData == "Ping")
                     {
 
@@ -117,7 +110,6 @@ namespace DataServer
 
                         client.Close();
                     }
-
                     //Logowanie
                     if (responseData.StartsWith("Login"))
                     {
@@ -188,7 +180,6 @@ namespace DataServer
                             client.Close();
                         }
                     }
-
                     //Treansfer plików
                     if (responseData.StartsWith("Upload"))
                     {
@@ -391,7 +382,6 @@ namespace DataServer
 
 
                     }
-
                     //Weryfiakcja sesji
                     if (responseData.StartsWith("IsSessionValid"))
                     {
@@ -422,7 +412,7 @@ namespace DataServer
 
                         }
                     }
-
+                    //Zatrzymanie serwera
                     if (responseData.StartsWith("STOP") && remoteEndPoint.Address.Equals(IPAddress.Loopback))
                     {
                         Console.WriteLine("Zamykanie serwera...");
@@ -432,8 +422,6 @@ namespace DataServer
                     }
 
                     client.Close();
-                
-            
                 }
                 await Task.Delay(1500);
                 System.Environment.Exit(0);
