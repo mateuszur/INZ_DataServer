@@ -105,44 +105,31 @@ namespace DataSerwer.SessionManager
         }
         // // /// /////////////////////////////////
 
-        //obsługa logowania i weryfiakcji danych w bazie 
+        //Obsługa logowania i weryfiakcji danych w bazie 
         public bool IsValidUser(string username, string password)
         {
-
-            // sprawdź, czy nazwa użytkownika i hasło są poprawne.
-
+            //Weryfiakcja czy nazwa użytkownika i hasło są poprawne.
             if (IsValidUserWorker(username, password))
             {
                 return true;
             }
             return false;
         }
-
-
         private bool IsValidUserWorker(string username, string password)
         {
             connection_name.ConnectionString = connection_string;
-
-
-
             string user_password = "";
             string password_salt = "";
-
             string password_temp;
-
             try
             {
-                //Połączenie do bazy
+                //Połączenie do bazy danych
                 connection_name.Open();
                 {
-
                     string query = "SELECT * FROM `View_Users_Login` WHERE Login LIKE @username;";
-
                     MySqlCommand command = new MySqlCommand(query, connection_name);
                     command.Parameters.AddWithValue("@username", username);
-
                     MySqlDataReader data_from_query = command.ExecuteReader();
-
                     while (data_from_query.Read())
                     {
                         userDetails.ID = (int)data_from_query["ID"];
@@ -151,11 +138,7 @@ namespace DataSerwer.SessionManager
                         password_salt = data_from_query["Salt"].ToString();
                         userDetails.Privileges = (int)data_from_query["Privileges"];
                     }
-
                     connection_name.Close();
-                    //Połączenie do bazy
-
-
                     //Weryfiakcja hasła i username
                     if (password_salt == "")
                     {
@@ -165,34 +148,23 @@ namespace DataSerwer.SessionManager
                     {
                         password_temp = password + password_salt;
                     }
-
                     using (SHA1 sha1 = SHA1.Create())
                     {
                         byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password_temp));
                         password_temp = BitConverter.ToString(hash).Replace("-", "").ToLower();
                     }
-
                     if (userDetails.Login == username && user_password == password_temp)
                     {
-
                         return true;
                     }
                     else { return false; }
-
-                    //Weryfiakcja hasła i username
-
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
-
             }
-
-
-
-
         }
         // // /// /////////////////////////////////
 
