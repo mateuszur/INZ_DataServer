@@ -426,9 +426,7 @@ namespace DataSerwer.FileTransfer
 
         private void DeleteFileOnServer(int userID, FileDetails fileDetails)
         {
-
             string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID + "." + fileDetails.FileType;
-
             try
             {
                 if (File.Exists(userFilePath))
@@ -443,17 +441,12 @@ namespace DataSerwer.FileTransfer
                 Console.WriteLine("Błąd podczas usuwania plików z serwera!");
 
             }
-
-
         }
 
         private void DeleteFileInDB(string fileName, int userID, FileDetails fileDetails)
         {
             try
             {
-
-                //if(IsFileExistDB(fileName,userID,fileDetails))
-                //{
                     string querry = "DELETE FROM `File_Table` WHERE `File_Table`.`User_ID` = @userID AND `File_Table`.`File_name` LIKE @fileName AND `File_Table`.`ID` LIKE @fileID;";
 
                     MySqlCommand command = new MySqlCommand(querry, connection_name);
@@ -464,8 +457,6 @@ namespace DataSerwer.FileTransfer
 
                     connection_name.Open();
                     MySqlDataReader data_from_querry = command.ExecuteReader();
-
-                //}
 
             }catch(Exception ex)
             {
