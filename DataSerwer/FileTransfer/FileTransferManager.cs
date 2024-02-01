@@ -447,7 +447,8 @@ namespace DataSerwer.FileTransfer
         {
             try
             {
-                    string querry = "DELETE FROM `File_Table` WHERE `File_Table`.`User_ID` = @userID AND `File_Table`.`File_name` LIKE @fileName AND `File_Table`.`ID` LIKE @fileID;";
+                    string querry = "DELETE FROM `File_Table` WHERE `File_Table`.`User_ID`" +
+                    " = @userID AND `File_Table`.`File_name` LIKE @fileName AND `File_Table`.`ID` LIKE @fileID;";
 
                     MySqlCommand command = new MySqlCommand(querry, connection_name);
                   
