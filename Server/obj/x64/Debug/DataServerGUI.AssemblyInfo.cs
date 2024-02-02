@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataServerGUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bc823a104a999a20695deac78c2c7188d139986")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba2157f0c17f271ce59963d26959fb1a5057b71a")]
 [assembly: System.Reflection.AssemblyProductAttribute("DataServerGUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DataServerGUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

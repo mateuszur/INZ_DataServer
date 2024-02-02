@@ -11,6 +11,7 @@ using System.Text;
 using System.Timers;
 using System.Security.Cryptography;
 using static Mysqlx.Expect.Open.Types.Condition.Types;
+using System.Globalization;
 
 namespace DataServer
 {
@@ -199,7 +200,7 @@ namespace DataServer
                             fileDetails.userID = int.Parse(parts[2]);
                             fileDetails.FileName = parts[3];
                             fileDetails.FileType = parts[4];
-                            if (parts.Length > 5 && double.TryParse(parts[5], out double fileSize))
+                            if (parts.Length > 5 && double.TryParse(parts[5], NumberStyles.Any, CultureInfo.InvariantCulture, out double fileSize))
                             {
                                 fileDetails.FileSize = Math.Round(fileSize, 3);
                             }
