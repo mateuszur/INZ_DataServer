@@ -81,7 +81,6 @@ namespace DataServerGUI.Configurations
             try
             {   // Wczytanie certyfikatu PFX
                 X509Certificate2 certificate = new X509Certificate2(pfxFilePath, pfxPassword, X509KeyStorageFlags.Exportable);
-
                 //Pozyskanie klucza publicznego
                 byte[] publicKey = certificate.PublicKey.EncodedKeyValue.RawData;
                 if (publicKey == null)
@@ -101,8 +100,6 @@ namespace DataServerGUI.Configurations
 
                             config.Key = BitConverter.ToString(aesKey).Replace("-", "");
                             config.IV = BitConverter.ToString(aesIV).Replace("-", "");
-
-                       
                     }
                 }
             }

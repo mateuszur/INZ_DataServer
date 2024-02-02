@@ -233,7 +233,7 @@ namespace DataServerGUI.AppWindows
 
         private string Salt_Generator()
         {
-            //długość soli w bajtach
+            //Długość soli w bajtach
             int saltLength = 32; 
 
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
@@ -241,10 +241,10 @@ namespace DataServerGUI.AppWindows
         
             byte[] saltBytes = new byte[saltLength];
 
-            //generowanie soli
+            //Generowanie soli
             rng.GetNonZeroBytes(saltBytes);
 
-            // Przekształć tablicę bajtów na ciąg znaków w formacie Base64
+            //Przekształcenie tablicy bajtów na ciąg znaków w formacie Base64
             string salt = Convert.ToBase64String(saltBytes);
             
             return salt;
