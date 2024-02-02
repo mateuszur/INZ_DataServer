@@ -79,11 +79,10 @@ namespace DataServerGUI.Configurations
         public void CertificateReader2(string pfxFilePath, string pfxPassword, Config config)
         {
             try
-            {// Wczytaj certyfikat PFX
+            {   // Wczytanie certyfikatu PFX
                 X509Certificate2 certificate = new X509Certificate2(pfxFilePath, pfxPassword, X509KeyStorageFlags.Exportable);
 
-
-                // Wyciągnij klucz publiczny
+                //Pozyskanie klucza publicznego
                 byte[] publicKey = certificate.PublicKey.EncodedKeyValue.RawData;
                 if (publicKey == null)
                 {
@@ -91,14 +90,13 @@ namespace DataServerGUI.Configurations
                 }
                 else
                 {
-                    //  KDF (PBKDF2) do wygenerowania klucza AES i IV z klucza publicznego
+                   //  KDF (PBKDF2) do wygenerowania klucza AES i IV z klucza publicznego
                     using (var rfc2898 = new Rfc2898DeriveBytes(publicKey, new byte[16], 10000))
                     {
-                        byte[] aesKey = rfc2898.GetBytes(32); // Generuj 256-bitowy klucz AES
-                        byte[] aesIV = rfc2898.GetBytes(16); // Generuj 128-bitowy IV
+                        byte[] aesKey = rfc2898.GetBytes(32); // 256-bitowy klucz AES
+                        byte[] aesIV = rfc2898.GetBytes(16); // 128-bitowy IV
 
-                        // Zapisz klucz AES i IV do pliku
-                        
+                        // Zapis kluczy AES i IV do pliku
                         ReadWriteConfig readWriteConfig = new ReadWriteConfig();
 
                             config.Key = BitConverter.ToString(aesKey).Replace("-", "");
