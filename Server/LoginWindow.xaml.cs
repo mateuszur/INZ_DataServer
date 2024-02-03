@@ -39,15 +39,11 @@ namespace Server
 
         }
 
-        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private  void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            username = "mateuszur";//UsernameTextBox.Text;
-            password = "Pa$$w0rd";// PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
+            username =UsernameTextBox.Text;
+            password = PasswordBox.Visibility== Visibility.Visible ? PasswordBox.Password  : PasswordTextBox.Text;
 
 
             connection_name.ConnectionString = connection_string;

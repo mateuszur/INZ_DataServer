@@ -60,14 +60,7 @@ namespace Server
             connection_string = fileManager.ReadParameter();
             this.user_privilege = user_privilege;
             this.username = username;
-            configReadWrite.ReadConfiguration(config);
-            this.dataServerPort = config.DataServerPort;
-            this.ftpServerPort = config.FTPServerPort;
-            this.ftpUsername = config.FTPUsername;
-            this.ftpPassword = config.FTPPassword;
-            this.filePath = config.FilePath;
-            this.key = StringToByteArray(config.Key);
-            this.iv = StringToByteArray(config.IV);
+         
         }
 
         private void Server_Setting_Button_Click(object sender, RoutedEventArgs e)
@@ -371,6 +364,15 @@ namespace Server
         {
             try
             {
+                 configReadWrite.ReadConfiguration(config);
+                this.dataServerPort = config.DataServerPort;
+                this.ftpServerPort = config.FTPServerPort;
+                this.ftpUsername = config.FTPUsername;
+                this.ftpPassword = config.FTPPassword;
+                this.filePath = config.FilePath;
+                this.key = StringToByteArray(config.Key);
+                this.iv = StringToByteArray(config.IV);
+
                 TcpClient client = new TcpClient("localhost", 3333);
                 NetworkStream stream = client.GetStream();
 
