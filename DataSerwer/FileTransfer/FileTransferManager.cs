@@ -426,7 +426,7 @@ namespace DataSerwer.FileTransfer
 
         private void DeleteFileOnServer(int userID, FileDetails fileDetails)
         {
-            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID + "." + fileDetails.FileType;
+            string userFilePath = filePath + "\\User" + userID + "\\" + fileDetails.FileID + fileDetails.FileType;
             try
             {
                 if (File.Exists(userFilePath))
